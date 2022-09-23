@@ -6,7 +6,6 @@ const INITIAL_STATE = { nome: 'Xablau', idade: 100 };
 
 export default function RecipesAppProvider({ children }) {
   const [state, setState] = useState(INITIAL_STATE);
-  setState();
   return (
     <RecipesAppContext.Provider value={ state }>
       {children}
