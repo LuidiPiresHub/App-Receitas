@@ -6,7 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 function App() {
   return (
     <div className="meals">
-      <span className="logo">Main group 30</span>
+      <span className="logo">Main group 30!</span>
       <object
         className="rocksGlass"
         type="image/svg+xml"
