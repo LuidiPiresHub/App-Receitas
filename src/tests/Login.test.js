@@ -14,14 +14,14 @@ describe('Testing the page Login', () => {
     expect(screen.getByRole('button', { name: 'Enter' })).toBeInTheDocument();
   });
   it('2- Checks if inputs and button work correctly', () => {
-    renderWithRouter(<App />);
+    const { history } = renderWithRouter(<App />);
     const btnEnter = screen.getByRole('button', { name: 'Enter' });
-    const inputEmail = screen.getByTestId('email-input');
-    const inputPassword = screen.getByTestId('password-input');
     expect(btnEnter.disabled).toBeTruthy();
-    userEvent.type(inputEmail, EMAIL);
+    userEvent.type(screen.getByTestId('email-input'), EMAIL);
     expect(btnEnter.disabled).toBeTruthy();
-    userEvent.type(inputPassword, 'teste23');
+    userEvent.type(screen.getByTestId('password-input'), 'teste23');
     expect(btnEnter.disabled).toBeFalsy();
+    userEvent.click(btnEnter);
+    expect(history.location.pathname).toBe('/meals');
   });
 });

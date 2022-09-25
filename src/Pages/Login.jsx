@@ -1,12 +1,14 @@
 // DEIXAR O LOGIN COMO JS
 
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 const MAX_LENGTH_PASSWORD = 6;
 
 export default function Login() {
   const [login, setLogin] = useState({ email: '', password: '' });
   const [isDisabled, setIsDisabled] = useState(true);
+  const history = useHistory();
 
   const handleChange = ({ target }) => {
     const { name, value } = target;
@@ -30,6 +32,7 @@ export default function Login() {
     localStorage.setItem('user', JSON.stringify({ email }));
     localStorage.setItem('mealsToken', 1);
     localStorage.setItem('drinksToken', 1);
+    history.push('/meals');
   };
 
   return (
