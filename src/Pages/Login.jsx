@@ -25,7 +25,12 @@ export default function Login() {
     }
   };
 
-  // const onClickEnter = () => {}
+  const onClickEnter = () => {
+    const { email } = login;
+    localStorage.setItem('user', JSON.stringify({ email }));
+    localStorage.setItem('mealsToken', 1);
+    localStorage.setItem('drinksToken', 1);
+  };
 
   return (
     <form>
@@ -49,6 +54,7 @@ export default function Login() {
         type="button"
         data-testid="login-submit-btn"
         disabled={ isDisabled }
+        onClick={ onClickEnter }
       >
         Enter
       </button>
