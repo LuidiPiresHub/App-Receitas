@@ -15,9 +15,9 @@ const translate = {
 };
 
 export default function Header() {
+  const { setBool } = useContext(RecipesAppContext);
   const history = useHistory();
   const [boolHeader, setBoolHeader] = useState(false);
-  const { setBool } = useContext(RecipesAppContext);
 
   useEffect(() => {
     setBool(boolHeader);
