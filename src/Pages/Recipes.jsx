@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import Header from '../Components/Header';
 import SearchBar from '../Components/SearchBar';
 import Footer from '../Components/Footer';
-import PropTypes from 'prop-types';
 import RecipeCard from '../Components/RecipeCard';
 import CategoriesSelector from '../Components/CategoriesSelector';
 
@@ -92,7 +92,7 @@ export default function Recipes({ location: { pathname } }) {
             />
           ))}
       </section>
-    <Footer />
+      <Footer />
     </>
   );
 }
