@@ -8,6 +8,7 @@ export default function RecipesAppProvider({ children }) {
     bool,
     setBool,
   };
+
   return (
     <RecipesAppContext.Provider value={ contextValue }>
       {children}

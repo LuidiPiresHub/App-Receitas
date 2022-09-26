@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import Header from '../Components/Header';
+import SearchBar from '../Components/SearchBar';
+import Footer from '../Components/Footer';
+import PropTypes from 'prop-types';
 import RecipeCard from '../Components/RecipeCard';
 import CategoriesSelector from '../Components/CategoriesSelector';
 
@@ -69,7 +72,8 @@ export default function Recipes({ location: { pathname } }) {
 
   return (
     <>
-      {/* Header */}
+      <Header />
+      <SearchBar />
       <CategoriesSelector
         toggleFilter={ toggleFilter }
         pathname={ pathname }
@@ -88,8 +92,8 @@ export default function Recipes({ location: { pathname } }) {
             />
           ))}
       </section>
+    <Footer />
     </>
-    // Footer
   );
 }
 
