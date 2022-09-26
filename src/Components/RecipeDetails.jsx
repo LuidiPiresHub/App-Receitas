@@ -18,8 +18,8 @@ export default function RecipeDetails({ location: { pathname } }) {
         setReturnFetch(resultDrinks);
       }
     };
-    callingFetch();
     console.log(returnFetch);
+    callingFetch();
   }, [pathname]);
 
   return (
