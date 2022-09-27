@@ -1,5 +1,3 @@
-// DEIXAR O HEADER COMO JS
-
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import RecipesAppContext from '../Context/RecipesAppContext';
@@ -14,6 +12,12 @@ const translate = {
   '/favorite-recipes': 'Favorite Recipes',
 };
 
+const routes = [
+  '/favorite-recipes',
+  '/profile',
+  '/done-recipes',
+];
+
 export default function Header() {
   const { setBool } = useContext(RecipesAppContext);
   const history = useHistory();
@@ -21,17 +25,12 @@ export default function Header() {
 
   useEffect(() => {
     setBool(boolHeader);
-  }, [boolHeader]);
+  }, [boolHeader, setBool]);
 
   const { location: { pathname } } = history;
 
   const verifyCondition = () => {
-    // ARMAZENEAR AS URLS DENTRO DE UM ARRAY E USAR UM MAP
-    // REFATORAÇÃO
-    const bools = [];
-    bools.push(pathname !== '/favorite-recipes');
-    bools.push(pathname !== '/profile');
-    bools.push(pathname !== '/done-recipes');
+    const bools = routes.map((route) => route !== pathname);
     return bools.every((bool) => bool);
   };
 
