@@ -20,9 +20,8 @@ function Favorite({ location, returnFetch }) {
   }, [details]);
 
   const onClickShare = () => {
-    copy(location.href);
+    copy(window.location.href);
     setCopyLink(true);
-    console.log(returnFetch);
   };
 
   const checkCategory = () => {
@@ -113,7 +112,7 @@ function Favorite({ location, returnFetch }) {
 
 Favorite.propTypes = {
   location: PropTypes.shape({
-    href: PropTypes.string.isRequired,
+    href: PropTypes.string,
     pathname: PropTypes.string.isRequired,
   }).isRequired,
   returnFetch: PropTypes.arrayOf(Object).isRequired,

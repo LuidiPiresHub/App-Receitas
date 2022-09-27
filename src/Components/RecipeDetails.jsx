@@ -14,12 +14,12 @@ export default function RecipeDetails({ location: { pathname }, location }) {
     const callingFetch = async () => {
       if (pathname.includes('meals')) {
         setType('meals');
-        const { meals } = await fetchApiMeals(id);
-        setReturnFetch(meals[0]);
+        const meals = await fetchApiMeals(id);
+        setReturnFetch(meals);
       } else if (pathname.includes('drinks')) {
         setType('drinks');
-        const { drinks } = await fetchApiDrinks(id);
-        setReturnFetch(drinks[0]);
+        const drinks = await fetchApiDrinks(id);
+        setReturnFetch(drinks);
       }
     };
     callingFetch();
@@ -27,7 +27,7 @@ export default function RecipeDetails({ location: { pathname }, location }) {
 
   return (
     <section>
-      <ProgressSection recipeObj={ returnFetch } type={ type } id={ id } />
+      <ProgressSection recipeObj={ returnFetch[0] } type={ type } id={ id } />
       <Favorite location={ location } returnFetch={ returnFetch } />
     </section>
   );
