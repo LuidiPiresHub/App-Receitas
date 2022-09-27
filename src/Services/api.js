@@ -1,4 +1,4 @@
-const fetchApi = async (path, ingredient, componentName) => {
+export const fetchApi = async (path, ingredient, componentName) => {
   try {
     const translate = {
       Ingredient: '/filter.php?i=',
@@ -16,4 +16,13 @@ const fetchApi = async (path, ingredient, componentName) => {
     return { drinks: null };
   }
 };
-export default fetchApi;
+
+export const fetchApiMeals = async (id) => {
+  const fromApi = await fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${id}`).then((response) => response.json().then((data) => data));
+  return fromApi;
+};
+
+export const fetchApiDrinks = async (id) => {
+  const fromApi = await fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`).then((response) => response.json().then((data) => data));
+  return fromApi;
+};

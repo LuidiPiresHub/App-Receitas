@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import propTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import RecipesAppContext from './RecipesAppContext';
-import fetchApi from '../Services/api';
+import { fetchApi } from '../Services/api';
 
 export default function RecipesAppProvider({ children }) {
   const [bool, setBool] = useState();
