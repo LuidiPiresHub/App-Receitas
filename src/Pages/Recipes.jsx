@@ -19,6 +19,7 @@ export default function Recipes({ location: { pathname } }) {
   const [initialRecipes, setInitialRecipes] = useState([]);
   const [filter, setFilter] = useState('All');
   const { arrayCardRecipes, setArrayCardRecipes } = useContext(RecipesAppContext);
+  arrayCardRecipes.length = 12;
 
   useEffect(() => {
     const fetchRecipesByType = async (typeOfRequest) => {
@@ -26,14 +27,12 @@ export default function Recipes({ location: { pathname } }) {
         const response = await fetch(
           'https://www.themealdb.com/api/json/v1/1/search.php?s=',
         ).then((res) => res.json());
-        response.meals.length = 12;
         setArrayCardRecipes(response.meals);
         setInitialRecipes(response.meals);
       } else if (typeOfRequest === '/drinks') {
         const response = await fetch(
           'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=',
         ).then((res) => res.json());
-        response.drinks.length = 12;
         setArrayCardRecipes(response.drinks);
         setInitialRecipes(response.drinks);
       }
@@ -49,13 +48,11 @@ export default function Recipes({ location: { pathname } }) {
         const response = await fetch(
           `https://www.themealdb.com/api/json/v1/1/filter.php?c=${filter}`,
         ).then((res) => res.json());
-        response.meals.length = 12;
         setArrayCardRecipes(response.meals);
       } else if (filter !== 'All' && typeOfRequest === '/drinks') {
         const response = await fetch(
           `https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=${filter}`,
         ).then((res) => res.json());
-        response.drinks.length = 12;
         setArrayCardRecipes(response.drinks);
       }
     };

@@ -15,7 +15,6 @@ export default function SearchBar() {
           />
           <div>
             <label htmlFor="Ingredient">
-              Ingredient
               <input
                 type="radio"
                 id="Ingredient"
@@ -24,9 +23,9 @@ export default function SearchBar() {
                 data-testid="ingredient-search-radio"
                 onChange={ ({ target: { value } }) => setRadio(value) }
               />
+              Ingredient
             </label>
             <label htmlFor="Name">
-              Name
               <input
                 type="radio"
                 id="Name"
@@ -35,9 +34,9 @@ export default function SearchBar() {
                 data-testid="name-search-radio"
                 onChange={ ({ target: { value } }) => setRadio(value) }
               />
+              Name
             </label>
             <label htmlFor="First letter">
-              First letter
               <input
                 type="radio"
                 id="First letter"
@@ -46,6 +45,7 @@ export default function SearchBar() {
                 data-testid="first-letter-search-radio"
                 onChange={ ({ target: { value } }) => setRadio(value) }
               />
+              First letter
             </label>
           </div>
           <button
