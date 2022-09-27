@@ -46,6 +46,7 @@ export default function RecipesAppProvider({ children }) {
     getApi,
     setSearchInputValue,
     arrayCardRecipes,
+    setArrayCardRecipes,
   };
 
   return (

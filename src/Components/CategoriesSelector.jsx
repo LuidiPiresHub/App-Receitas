@@ -10,7 +10,7 @@ const containerStyles = {
   justifyContent: 'center',
 };
 
-export default function CategoriesSelector({ pathname, toggleFilter }) {
+export default function CategoriesSelector({ pathname, toggleFilter, setFilter }) {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
@@ -56,4 +56,5 @@ export default function CategoriesSelector({ pathname, toggleFilter }) {
 CategoriesSelector.propTypes = {
   pathname: PropTypes.string.isRequired,
   toggleFilter: PropTypes.func.isRequired,
+  setFilter: PropTypes.func.isRequired,
 };
