@@ -1,5 +1,3 @@
-// DEIXAR O LOGIN COMO JS
-
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
