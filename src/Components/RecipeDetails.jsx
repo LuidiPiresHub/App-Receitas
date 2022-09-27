@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { fetchApiMeals, fetchApiDrinks } from '../Services/api';
+import Favorite from './Favorite';
 
 export default function RecipeDetails({ location: { pathname } }) {
   const route = useParams();
@@ -18,12 +19,13 @@ export default function RecipeDetails({ location: { pathname } }) {
         setReturnFetch(resultDrinks);
       }
     };
-    console.log(returnFetch);
     callingFetch();
   }, [pathname]);
 
   return (
-    <div>Details</div>
+    <div>
+      <Favorite location={ location } returnFetch={ returnFetch } />
+    </div>
   );
 }
 
