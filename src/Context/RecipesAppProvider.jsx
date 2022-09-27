@@ -4,9 +4,15 @@ import RecipesAppContext from './RecipesAppContext';
 
 export default function RecipesAppProvider({ children }) {
   const [bool, setBool] = useState();
+  const [doneRecipes, setDoneRecipes] = useState();
+  const [recipesInProgress, setRecipesInProgress] = useState();
   const contextValue = {
     bool,
     setBool,
+    doneRecipes,
+    setDoneRecipes,
+    recipesInProgress,
+    setRecipesInProgress,
   };
 
   return (

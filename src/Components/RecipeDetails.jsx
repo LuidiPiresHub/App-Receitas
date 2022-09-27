@@ -2,28 +2,33 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { fetchApiMeals, fetchApiDrinks } from '../Services/api';
+import ProgressSection from './ProgressSection';
 
 export default function RecipeDetails({ location: { pathname } }) {
-  const route = useParams();
+  const { id } = useParams();
   const [returnFetch, setReturnFetch] = useState([]);
+  const [type, setType] = useState('');
 
   useEffect(() => {
     const callingFetch = async () => {
-      const { id } = route;
       if (pathname.includes('meals')) {
-        const resultMeals = await fetchApiMeals(id);
-        setReturnFetch(resultMeals);
+        setType('meals');
+        const { meals } = await fetchApiMeals(id);
+        setReturnFetch(meals[0]);
       } else if (pathname.includes('drinks')) {
-        const resultDrinks = await fetchApiDrinks(id);
-        setReturnFetch(resultDrinks);
+        setType('drinks');
+        const { drinks } = await fetchApiDrinks(id);
+        setReturnFetch(drinks[0]);
       }
     };
-    console.log(returnFetch);
     callingFetch();
-  }, [pathname]);
+  }, []);
 
   return (
-    <div>Details</div>
+    <>
+      <div />
+      <ProgressSection recipeObj={ returnFetch } type={ type } id={ id } />
+    </>
   );
 }
 

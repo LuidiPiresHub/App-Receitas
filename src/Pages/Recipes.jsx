@@ -79,8 +79,6 @@ export default function Recipes({ location: { pathname } }) {
         pathname={ pathname }
       />
       <section style={ containerStyles }>
-        <Link to="meals">Meals</Link>
-        <Link to="drinks">Drinks</Link>
         {recipes.length > 0
           && recipes.map((recipe, i) => (
             <RecipeCard
