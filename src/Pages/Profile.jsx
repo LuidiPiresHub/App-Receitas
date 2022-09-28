@@ -9,7 +9,7 @@ export default function Profile() {
 
   const handleLogoutButton = () => {
     history.push('/');
-    localStorage.removeItem('user');
+    localStorage.clear();
   };
 
   return (
