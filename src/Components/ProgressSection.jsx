@@ -12,7 +12,7 @@ export default function ProgressSection({ /* recipeObj, */ type, id }) {
         localStorage.getItem('inProgressRecipes'),
       );
 
-      if (type && showBtn && inProgressRecipes) {
+      if (type && showBtn && inProgressRecipes.length > 0) {
         const isInProgress = Object.keys(inProgressRecipes[type]).some(
           (key) => key === id,
         );
