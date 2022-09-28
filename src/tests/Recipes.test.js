@@ -4,6 +4,7 @@ import mockApiResponse from './Helpers/mockApiResponse';
 const { waitFor, screen } = require('@testing-library/react');
 const { default: renderWithRouter } = require('./Helpers/renderWithRouter');
 
+const allCategory = 'All-category-filter';
 // Jeito certo de mockar o fetch com .then() no código:
 // https://stackoverflow.com/questions/62405645/how-to-mock-fetch-when-testing-a-react-app
 
@@ -22,18 +23,25 @@ afterEach(() => {
 describe('Testes da implementação da HomePage', () => {
   test('Quantidade de items está correta', async () => {
     renderWithRouter('/meals');
-    await waitFor(() => {
-      expect(screen.getByTestId('0-recipe-card')).toBeInTheDocument();
-      expect(screen.getByTestId('1-recipe-card')).toBeInTheDocument();
-      expect(screen.getByTestId('2-recipe-card')).toBeInTheDocument();
-      expect(screen.getByTestId('All-category-filter')).toBeInTheDocument();
-    }, { timeout: 8000 });
+    await waitFor(
+      () => {
+        expect(screen.getByTestId('0-recipe-card')).toBeInTheDocument();
+        expect(screen.getByTestId('1-recipe-card')).toBeInTheDocument();
+        expect(screen.getByTestId('2-recipe-card')).toBeInTheDocument();
+        expect(screen.getByTestId(allCategory)).toBeInTheDocument();
+      },
+      { timeout: 8000 },
+    );
   });
   test('As requisições certas são feitas na tela de comidas', async () => {
     renderWithRouter('/meals');
     expect(fetch).toHaveBeenCalledTimes(2);
-    expect(fetch).toHaveBeenCalledWith('https://www.themealdb.com/api/json/v1/1/search.php?s=');
-    expect(fetch).toHaveBeenCalledWith('https://www.themealdb.com/api/json/v1/1/list.php?c=list');
+    expect(fetch).toHaveBeenCalledWith(
+      'https://www.themealdb.com/api/json/v1/1/search.php?s=',
+    );
+    expect(fetch).toHaveBeenCalledWith(
+      'https://www.themealdb.com/api/json/v1/1/list.php?c=list',
+    );
     await waitFor(() => {
       expect(screen.getByTestId('Iguaria-category-filter')).toBeInTheDocument();
     });
@@ -41,19 +49,28 @@ describe('Testes da implementação da HomePage', () => {
   test('As requisições certas são feitas na tela de bebidas', async () => {
     renderWithRouter('/drinks');
     expect(fetch).toHaveBeenCalledTimes(2);
-    expect(fetch).toHaveBeenCalledWith('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=');
-    expect(fetch).toHaveBeenCalledWith('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list');
+    expect(fetch).toHaveBeenCalledWith(
+      'https://www.thecocktaildb.com/api/json/v1/1/search.php?s=',
+    );
+    expect(fetch).toHaveBeenCalledWith(
+      'https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list',
+    );
     await waitFor(() => {
       expect(screen.getByTestId('Natural-category-filter')).toBeInTheDocument();
     });
   });
+});
+
+describe('Testa os botões de categoria', () => {
   test('Clicando numa categoria de bebidas', async () => {
     renderWithRouter('/drinks');
     await waitFor(() => {
       const categoryBtn = screen.getByTestId('Natural-category-filter');
       userEvent.click(categoryBtn);
     });
-    expect(fetch).toHaveBeenCalledWith('https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Natural');
+    expect(fetch).toHaveBeenCalledWith(
+      'https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Natural',
+    );
   });
   test('Clicando numa categoria de comidas', async () => {
     renderWithRouter('/meals');
@@ -61,12 +78,24 @@ describe('Testes da implementação da HomePage', () => {
       const categoryBtn = screen.getByTestId('Iguaria-category-filter');
       userEvent.click(categoryBtn);
     });
-    expect(fetch).toHaveBeenCalledWith('https://www.themealdb.com/api/json/v1/1/filter.php?c=Iguaria');
+    expect(fetch).toHaveBeenCalledWith(
+      'https://www.themealdb.com/api/json/v1/1/filter.php?c=Iguaria',
+    );
   });
-  test('Clicando no botão all categories', () => {
+  test('Clicando no botão all categories na página meals', () => {
     renderWithRouter('/meals');
-    const categoryBtn = screen.getByTestId('All-category-filter');
+    const categoryBtn = screen.getByTestId(allCategory);
     userEvent.click(categoryBtn);
-    expect(fetch).not.toHaveBeenCalledWith('https://www.themealdb.com/api/json/v1/1/filter.php?c=All');
+    expect(fetch).not.toHaveBeenCalledWith(
+      'https://www.themealdb.com/api/json/v1/1/filter.php?c=All',
+    );
+  });
+  test('Clicando no botão all categories na página drinks', () => {
+    renderWithRouter('/drinks');
+    const categoryBtn = screen.getByTestId(allCategory);
+    userEvent.click(categoryBtn);
+    expect(fetch).not.toHaveBeenCalledWith(
+      'https://www.themealdb.com/api/json/v1/1/filter.php?c=All',
+    );
   });
 });
