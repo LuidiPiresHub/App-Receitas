@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { fetchApiMeals, fetchApiDrinks } from '../Services/api';
-import ProgressSection from './ProgressSection';
-import Favorite from './Favorite';
+import ProgressSection from '../Components/ProgressSection';
+import Favorite from '../Components/Favorite';
 
 export default function RecipeDetails({ location: { pathname }, location }) {
   const { id } = useParams();
@@ -27,8 +27,8 @@ export default function RecipeDetails({ location: { pathname }, location }) {
 
   return (
     <section>
-      <ProgressSection recipeObj={ returnFetch[0] } type={ type } id={ id } />
       <Favorite location={ location } returnFetch={ returnFetch } />
+      <ProgressSection recipeObj={ returnFetch[0] } type={ type } id={ id } />
     </section>
   );
 }

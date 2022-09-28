@@ -3,12 +3,12 @@ import './App.css';
 import { Switch, Route } from 'react-router-dom';
 import Login from './Pages/Login';
 import Recipes from './Pages/Recipes';
-import RecipeDetails from './Components/RecipeDetails';
+import RecipeDetails from './Pages/RecipeDetails';
 import RecipeInProgress from './Pages/RecipeInProgress';
 import Profile from './Pages/Profile';
 import DoneRecipes from './Pages/DoneRecipes';
 import FavoriteRecipes from './Pages/FavoriteRecipes';
-import NotFound from './Components/NotFound';
+import NotFound from './Pages/NotFound';
 import RecipesAppProvider from './Context/RecipesAppProvider';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
