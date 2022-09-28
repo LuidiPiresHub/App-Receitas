@@ -1,5 +1,5 @@
 import userEvent from '@testing-library/user-event';
-import mockApiResponse from './Helpers.mockApiResponse';
+import mockApiResponse from './Helpers/mockApiResponse';
 
 const { waitFor, screen } = require('@testing-library/react');
 const { default: renderWithRouter } = require('./Helpers/renderWithRouter');
