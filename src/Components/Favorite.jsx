@@ -13,8 +13,8 @@ function Favorite({ location, returnFetch }) {
 
   useEffect(() => {
     const getStorage = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
-    const test = getStorage.some((item) => item.id === details.id);
-    if (test) {
+    const favoriteList = getStorage.some((item) => item.id === details.id);
+    if (favoriteList) {
       setMarkedFavorite(true);
     }
   }, [details]);
