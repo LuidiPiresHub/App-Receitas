@@ -7,7 +7,6 @@ import renderWithRouter from './Helpers/renderWithRouter';
 const emailMocked = { email: 'alguem@alguem.com' };
 
 describe('Testando a página de perfil', () => {
-  
   test('Verfica se os botões estão na tela e funcionando', () => {
     const { history } = renderWithRouter(<App />);
     localStorage.setItem('user', JSON.stringify(emailMocked));
@@ -26,7 +25,7 @@ describe('Testando a página de perfil', () => {
     expect(logoutBtn).toBeInTheDocument();
   });
 
-  test('Verfica se ao clicar no botão', () => {
+  test('Verfica se ao clicar no botão Done recipes é redirecionado para a rota certa', () => {
     const { history } = renderWithRouter(<App />);
     history.push('/profile');
     const doneRepBtn = screen.getByTestId('profile-done-btn');
@@ -35,7 +34,7 @@ describe('Testando a página de perfil', () => {
     expect(pathname).toBe('/done-recipes');
   });
 
-  test('Verfica se ao clicar no botão', () => {
+  test('Verfica se ao clicar no botão Favorite Recipes é redirecionado para a rota certa', () => {
     const { history } = renderWithRouter(<App />);
     history.push('/profile');
     const favoriteRepBtn = screen.getByTestId('profile-favorite-btn');
@@ -44,7 +43,7 @@ describe('Testando a página de perfil', () => {
     expect(pathname).toBe('/favorite-recipes');
   });
 
-  test('Verfica se ao clicar no botão', () => {
+  test('Verfica se ao clicar no botão Logout é redirecionado para a rota certa', () => {
     const { history } = renderWithRouter(<App />);
     history.push('/profile');
     const logoutBtn = screen.getByTestId('profile-logout-btn');
