@@ -90,12 +90,13 @@ describe('Testa os botões de categoria', () => {
       'https://www.themealdb.com/api/json/v1/1/filter.php?c=All',
     );
   });
-  test('Clicando no botão all categories na página drinks', () => {
+  test('Clicando em um botão de categoria duas vezes', async () => {
     renderWithRouter('/drinks');
-    const categoryBtn = screen.getByTestId(allCategory);
-    userEvent.click(categoryBtn);
-    expect(fetch).not.toHaveBeenCalledWith(
-      'https://www.themealdb.com/api/json/v1/1/filter.php?c=All',
-    );
+    await waitFor(() => {
+      const álcoolBtn = screen.getByTestId('Alcólico-category-filter');
+      userEvent.click(álcoolBtn);
+      userEvent.click(álcoolBtn);
+    }, { timeout: 8000 });
+    expect(fetch).not.toHaveBeenCalledTimes(4);
   });
 });
