@@ -1,9 +1,20 @@
-import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
-
+import { useEffect, useState } from 'react';
+import { Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from 'swiper/react';
-
+import PropTypes from 'prop-types';
 
 export default function Carousel({ carousel }) {
+  const [type, setType] = useState('meals');
+  useEffect(() => {
+    const getType = () => {
+      if (window.location.href.includes('meals')) {
+        setType('meals');
+      } else {
+        setType('drinks');
+      }
+    };
+    getType();
+  }, []);
   return (
     <Swiper
       slidesPerView={ 2 }
@@ -12,11 +23,13 @@ export default function Carousel({ carousel }) {
       modules={ [Pagination] }
       className="mySwiper"
     >
-      {carousel.map((drink, index) => (
+      {carousel.map((recipe, index) => (
         <SwiperSlide key={ index }>
-          <p data-testid={ `${index}-recommendation-title` }>{drink.strDrink}</p>
+          <p data-testid={ `${index}-recommendation-title` }>
+            {type === 'meals' ? recipe.strDrink : recipe.strMeal}
+          </p>
           <img
-            src={ drink.strDrinkThumb }
+            src={ type === 'meals' ? recipe.strDrinkThumb : recipe.strMealThumb }
             alt="food_img"
             width="150px"
             height="150px"
@@ -27,3 +40,7 @@ export default function Carousel({ carousel }) {
     </Swiper>
   );
 }
+
+Carousel.propTypes = {
+  carousel: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+};
