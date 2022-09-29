@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import { getItemByKey } from '../Services/storageLocal';
 
 const copy = require('clipboard-copy');
 
@@ -12,11 +13,9 @@ function Favorite({ location, returnFetch }) {
   const [details, setDetails] = useState([]);
 
   useEffect(() => {
-    const getStorage = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+    const getStorage = getItemByKey('favoriteRecipes');
     const test = getStorage.some((item) => item.id === details.id);
-    if (test) {
-      setMarkedFavorite(true);
-    }
+    setMarkedFavorite(test);
   }, [details]);
 
   const onClickShare = () => {
@@ -26,40 +25,42 @@ function Favorite({ location, returnFetch }) {
 
   const checkCategory = () => {
     const { pathname } = location;
-    if (pathname.includes('meals') && returnFetch.length !== 0) {
-      const {
-        idMeal: id,
-        strArea: nationality,
-        strCategory: category,
-        strMeal: name,
-        strMealThumb: image,
-      } = returnFetch[0];
-      const favoriteRecipes = { id,
-        type: 'meal',
-        nationality,
-        category,
-        alcoholicOrNot: '',
-        name,
-        image };
+    if (returnFetch.length !== 0) {
+      // const {
+      //   idMeal: id,
+      //   strArea: nationality,
+      //   strCategory: category,
+      //   strMeal: name,
+      //   strMealThumb: image,
+      // } = returnFetch[0];
+      const favoriteRecipes = {
+        id: returnFetch[0]?.idMeal || returnFetch[0]?.idDrink,
+        type: pathname.includes('meals') ? 'meal' : 'drink',
+        nationality: returnFetch[0]?.strArea || '',
+        category: returnFetch[0]?.strCategory,
+        alcoholicOrNot: returnFetch[0]?.strAlcoholic || '',
+        name: returnFetch[0]?.strMeal || returnFetch[0]?.strDrink,
+        image: returnFetch[0]?.strMealThumb || returnFetch[0]?.strDrinkThumb,
+      };
       setDetails(favoriteRecipes);
     }
-    if (pathname.includes('drinks') && returnFetch.length !== 0) {
-      const {
-        idDrink: id,
-        strCategory: category,
-        strAlcoholic: alcoholicOrNot,
-        strDrink: name,
-        strDrinkThumb: image,
-      } = returnFetch[0];
-      const favoriteRecipes = { id,
-        type: 'drink',
-        nationality: '',
-        category,
-        alcoholicOrNot,
-        name,
-        image };
-      setDetails(favoriteRecipes);
-    }
+    // if (pathname.includes('drinks') && returnFetch.length !== 0) {
+    //   const {
+    //     idDrink: id,
+    //     strCategory: category,
+    //     strAlcoholic: alcoholicOrNot,
+    //     strDrink: name,
+    //     strDrinkThumb: image,
+    //   } = returnFetch[0];
+    //   const favoriteRecipes = { id,
+    //     type: 'drink',
+    //     nationality: '',
+    //     category,
+    //     alcoholicOrNot,
+    //     name,
+    //     image };
+    //   setDetails(favoriteRecipes);
+    // }
   };
 
   useEffect(() => {
