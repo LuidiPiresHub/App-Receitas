@@ -1,50 +1,49 @@
 #app {
-    height: 100%
+  height: 100%;
 }
 
-html,
-body {
-    position: relative;
-    height: 100%;
+html, body {
+  height: 100%;
+  position: relative;
 }
 
 body {
-    background: #eee;
-    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-    font-size: 14px;
-    color: #000;
-    margin: 0;
-    padding: 0;
+  background: #eee;
+  color: #000;
+  font-family: Helvetica Neue , Helvetica , Arial , sans-serif;
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
 }
 
 .swiper {
-    width: 100%;
-    height: 100%;
+  height: 100%;
+  width: 100%;
 }
 
 .swiper-slide {
-    text-align: center;
-    font-size: 18px;
-    background: rgb(157, 155, 155);
+  align-items: center;
+  align-items: center;
+  background: rgb(157, 155, 155);
+  -webkit-box-align: center;
+  -webkit-box-pack: center;
 
-    /* Center slide text vertically */
-    display: -webkit-box;
-    display: -ms-flexbox;
-    display: -webkit-flex;
-    display: flex;
-    -webkit-box-pack: center;
-    -ms-flex-pack: center;
-    -webkit-justify-content: center;
-    justify-content: center;
-    -webkit-box-align: center;
-    -ms-flex-align: center;
-    -webkit-align-items: center;
-    align-items: center;
+  /* Center slide text vertically */
+  display: box;
+  display: flexbox;
+  display: flex;
+  display: flex;
+  -ms-flex-align: center;
+  -ms-flex-pack: center;
+  font-size: 18px;
+  justify-content: center;
+  justify-content: center;
+  text-align: center;
 }
 
 .swiper-slide img {
-    display: block;
-    width: 75%;
-    height: 100%;
-    object-fit: cover;
+  display: block;
+  height: 100%;
+  object-fit: cover;
+  width: 75%;
 }
