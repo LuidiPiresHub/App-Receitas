@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import Carousel from '../Components/Carousel';
 import Favorite from '../Components/Favorite';
 import ProgressSection from '../Components/ProgressSection';
 import { fetchApiDrinks, fetchApiMeals } from '../Services/api';
@@ -25,8 +26,6 @@ export default function RecipeDetails({ location: { pathname }, location }) {
     callingFetch();
   }, []);
 
-<<<<<<< HEAD
-=======
   const foodType = whatFood(pathname);
 
   if (returnFetch.length > 0 && carousel.length > 0) {
@@ -73,7 +72,6 @@ export default function RecipeDetails({ location: { pathname }, location }) {
       </main>
     );
   }
->>>>>>> 11d3996 (overflow x hidden para o slider e test coverage para Progress Section)
   return (
     <section>
       <Favorite location={ location } returnFetch={ returnFetch } />
