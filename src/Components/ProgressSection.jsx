@@ -64,5 +64,4 @@ export default function ProgressSection({ /* recipeObj, */ type, id }) {
 ProgressSection.propTypes = {
   id: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  // recipeObj: PropTypes.shape([]).isRequired,
 };

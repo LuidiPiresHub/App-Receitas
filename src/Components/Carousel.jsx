@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Pagination } from 'swiper';
+import { Pagination } from 'swiper/core';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import PropTypes from 'prop-types';
 
@@ -17,6 +17,7 @@ export default function Carousel({ carousel }) {
   }, []);
   return (
     <Swiper
+      style={ { marginBottom: '100px' } }
       slidesPerView={ 2 }
       spaceBetween={ 30 }
       pagination={ { clickable: true } }
