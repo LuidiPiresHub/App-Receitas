@@ -7,16 +7,16 @@ import { getItemByKey } from '../Services/storageLocal';
 
 const copy = require('clipboard-copy');
 
-function Favorite({ location, returnFetch }) {
+function Favorite({ location, returnFetch, id }) {
   const [copyLink, setCopyLink] = useState(false);
   const [markedFavorite, setMarkedFavorite] = useState(false);
   const [details, setDetails] = useState([]);
 
   useEffect(() => {
     const getStorage = getItemByKey('favoriteRecipes');
-    const test = getStorage.some((item) => item.id === details.id);
+    const test = getStorage.some((item) => item.id === id);
     setMarkedFavorite(test);
-  }, [details]);
+  }, []);
 
   const onClickShare = () => {
     copy(window.location.href);
@@ -74,11 +74,11 @@ function Favorite({ location, returnFetch }) {
       setMarkedFavorite(false);
     }
     if (!markedFavorite) {
-      const getStorage = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+      const getStorage = getItemByKey('favoriteRecipes');
       const union = [...getStorage, details];
       localStorage.setItem('favoriteRecipes', JSON.stringify(union));
     } else {
-      const getStorage = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+      const getStorage = getItemByKey('favoriteRecipes');
       const filterFav = getStorage.filter((obj) => obj.id !== details.id);
       localStorage.setItem('favoriteRecipes', JSON.stringify(filterFav));
     }
@@ -117,6 +117,7 @@ Favorite.propTypes = {
     pathname: PropTypes.string.isRequired,
   }).isRequired,
   returnFetch: PropTypes.arrayOf(Object).isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default Favorite;

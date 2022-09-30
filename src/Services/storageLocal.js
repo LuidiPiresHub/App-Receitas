@@ -5,4 +5,5 @@ export const getItemByKey = (key) => {
   return JSON.parse(localStorage.getItem(key));
 };
 
-export const string = '';
+export const setlocalstorage = (key, value) => localStorage
+  .setItem(key, JSON.stringify(value));

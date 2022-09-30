@@ -4,7 +4,6 @@ import userEvent from '@testing-library/user-event';
 import App from '../App';
 import renderWithRouter from './Helpers/renderWithRouter';
 import oneDrinkId15997 from '../../cypress/mocks/oneDrinkId15997';
-import oneMeal from '../../cypress/mocks/oneMeal';
 
 const storageLocal = require('../Services/storageLocal');
 
@@ -17,9 +16,7 @@ const whiteHeartDrinks = 'http://localhost/drinks/whiteHeartIcon.svg';
 
 describe('Testing the component "Favorite"', () => {
   beforeEach(() => {
-    global.clipboard = {
-      writeText: jest.fn(),
-    };
+    jest.restoreAllMocks();
   });
   it('1- The buttons are in the "RecipeDetails" component on the meals route', () => {
     const { history } = renderWithRouter(<App />);
@@ -83,24 +80,29 @@ describe('Testing the component "Favorite"', () => {
     userEvent.click(buttons[1]);
     expect(buttons[1]).toHaveProperty('src', whiteHeartDrinks);
   });
-  it('6-', async () => {
+  it('6- The favorite button works correctly', async () => {
     jest.spyOn(global, 'fetch');
     global.fetch.mockResolvedValue({
-      json: jest.fn().mockResolvedValue(oneMeal),
+      json: jest.fn().mockResolvedValue(oneDrinkId15997),
     });
     const favoriteObj = [{
-      id: '52771', type: 'meal', nationality: 'Italian', category: 'Vegetarian', alcoholicOrNot: '', name: 'Spicy Arrabiata Penne', image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg' }];
+      alcoholicOrNot: 'Optional alcohol',
+      category: 'Ordinary Drink',
+      id: '15997',
+      image: 'https://www.thecocktaildb.com/images/media/drink/vyxwut1468875960.jpg',
+      name: 'GG',
+      nationality: '',
+      type: 'drink',
+    }];
     jest.spyOn(storageLocal, 'getItemByKey');
-    const { history } = renderWithRouter(<App />);
-    history.push('/meals/52771');
+    jest.spyOn(storageLocal, 'setlocalstorage');
+    storageLocal.setlocalstorage('favoriteRecipes', favoriteObj);
+    renderWithRouter(routeDrinks);
     await waitFor(() => expect(global.fetch).toHaveBeenCalled());
-    const buttons = screen.getAllByRole('img');
-    expect(buttons).toHaveLength(2);
-    expect(buttons[1]).toHaveProperty('src', whiteHeartMeals);
-    userEvent.click(screen.getByTestId(btnFavorite));
+    expect(screen.getAllByRole('img')[1]).toHaveProperty('src', 'http://localhost/drinks/blackHeartIcon.svg');
+
     expect(storageLocal.getItemByKey('favoriteRecipes')).toEqual(favoriteObj);
-    expect(buttons[1]).toHaveProperty('src', 'http://localhost/meals/blackHeartIcon.svg');
-    userEvent.click(buttons[1]);
-    expect(buttons[1]).toHaveProperty('src', whiteHeartMeals);
+    userEvent.click(screen.getByTestId('favorite-btn'));
+    expect(screen.getAllByRole('img')[1]).toHaveProperty('src', whiteHeartDrinks);
   });
 });
