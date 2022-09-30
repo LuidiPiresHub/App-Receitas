@@ -11,7 +11,8 @@ export default function ProgressSection({ /* recipeObj, */ type, id }) {
       const inProgressRecipes = JSON.parse(
         localStorage.getItem('inProgressRecipes'),
       );
-      if (type && showBtn && inProgressRecipes) {
+
+      if (type && showBtn && inProgressRecipes.length > 0) {
         const isInProgress = Object.keys(inProgressRecipes[type]).some(
           (key) => key === id,
         );
@@ -63,4 +64,5 @@ export default function ProgressSection({ /* recipeObj, */ type, id }) {
 ProgressSection.propTypes = {
   id: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
+  // recipeObj: PropTypes.shape([]).isRequired,
 };
