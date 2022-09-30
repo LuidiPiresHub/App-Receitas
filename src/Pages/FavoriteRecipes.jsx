@@ -7,7 +7,7 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 const copy = require('clipboard-copy');
 
-export default function FavoriteRecipes({ location }) {
+export default function FavoriteRecipes(/* { location } */) {
   const [favorites, setFavorites] = useState([]);
   const [copyLink, setCopyLink] = useState(false);
 
