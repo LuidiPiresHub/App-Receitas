@@ -14,8 +14,8 @@ function Favorite({ location, returnFetch, id }) {
 
   useEffect(() => {
     const getStorage = getItemByKey('favoriteRecipes');
-    const test = getStorage.some((item) => item.id === id);
-    setMarkedFavorite(test);
+    const confirmIfFavorite = getStorage.some((item) => item.id === id);
+    setMarkedFavorite(confirmIfFavorite);
   }, []);
 
   const onClickShare = () => {
@@ -26,13 +26,6 @@ function Favorite({ location, returnFetch, id }) {
   const checkCategory = () => {
     const { pathname } = location;
     if (returnFetch.length !== 0) {
-      // const {
-      //   idMeal: id,
-      //   strArea: nationality,
-      //   strCategory: category,
-      //   strMeal: name,
-      //   strMealThumb: image,
-      // } = returnFetch[0];
       const favoriteRecipes = {
         id: returnFetch[0]?.idMeal || returnFetch[0]?.idDrink,
         type: pathname.includes('meals') ? 'meal' : 'drink',
@@ -44,23 +37,6 @@ function Favorite({ location, returnFetch, id }) {
       };
       setDetails(favoriteRecipes);
     }
-    // if (pathname.includes('drinks') && returnFetch.length !== 0) {
-    //   const {
-    //     idDrink: id,
-    //     strCategory: category,
-    //     strAlcoholic: alcoholicOrNot,
-    //     strDrink: name,
-    //     strDrinkThumb: image,
-    //   } = returnFetch[0];
-    //   const favoriteRecipes = { id,
-    //     type: 'drink',
-    //     nationality: '',
-    //     category,
-    //     alcoholicOrNot,
-    //     name,
-    //     image };
-    //   setDetails(favoriteRecipes);
-    // }
   };
 
   useEffect(() => {

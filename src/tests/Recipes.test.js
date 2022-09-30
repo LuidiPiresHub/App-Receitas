@@ -15,13 +15,20 @@ describe('Testes da implementação da HomePage', () => {
       expect(screen.getAllByRole('button')).toHaveLength(10);
     });
   });
-  it('6-', async () => {
+  it('Teste referente ao componente Favorite', async () => {
     jest.spyOn(global, 'fetch');
     global.fetch.mockResolvedValue({
       json: jest.fn().mockResolvedValue(oneMeal),
     });
     const favoriteObj = [{
-      id: '52771', type: 'meal', nationality: 'Italian', category: 'Vegetarian', alcoholicOrNot: '', name: 'Spicy Arrabiata Penne', image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg' }];
+      id: '52771',
+      type: 'meal',
+      nationality: 'Italian',
+      category: 'Vegetarian',
+      alcoholicOrNot: '',
+      name: 'Spicy Arrabiata Penne',
+      image: 'https://www.themealdb.com/images/media/meals/ustsqw1468250014.jpg',
+    }];
     jest.spyOn(storageLocal, 'getItemByKey');
     const { history } = renderWithRouter(<App />);
     history.push('/meals/52771');

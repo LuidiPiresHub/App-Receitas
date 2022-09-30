@@ -19,25 +19,21 @@ describe('Testing the component "Favorite"', () => {
     jest.restoreAllMocks();
   });
   it('1- The buttons are in the "RecipeDetails" component on the meals route', () => {
-    const { history } = renderWithRouter(<App />);
-    history.push(routeMeals);
+    renderWithRouter(routeMeals);
     expect(screen.getByTestId(btnShare)).toBeInTheDocument();
     expect(screen.getByTestId(btnFavorite)).toBeInTheDocument();
   });
   it('2- The share button works correctly', () => {
-    const { history } = renderWithRouter(<App />);
     window.document.execCommand = jest.fn().mockImplementation(() => 'copied');
-    history.push(routeMeals);
+    renderWithRouter(routeMeals);
     userEvent.click(screen.getByTestId(btnShare));
     expect(screen.getByText('Link copied!')).toBeInTheDocument();
   });
   it('3- The favorite button works correctly', () => {
     jest.spyOn(Storage.prototype, 'setItem');
     Storage.prototype.setItem = jest.fn();
-    const { history } = renderWithRouter(<App />);
-    history.push(routeMeals);
+    renderWithRouter(routeMeals);
     const buttons = screen.getAllByRole('img');
-
     expect(buttons).toHaveLength(2);
     expect(buttons[1]).toHaveProperty('src', whiteHeartMeals);
     userEvent.click(buttons[1]);
@@ -48,8 +44,7 @@ describe('Testing the component "Favorite"', () => {
     expect(buttons[1]).toHaveProperty('src', whiteHeartMeals);
   });
   it('4- The buttons are in the "RecipeDetails" component on the drinks route', () => {
-    const { history } = renderWithRouter(<App />);
-    history.push(routeDrinks);
+    renderWithRouter(routeDrinks);
     expect(screen.getByTestId(btnShare)).toBeInTheDocument();
     expect(screen.getByTestId(btnFavorite)).toBeInTheDocument();
   });
@@ -100,7 +95,6 @@ describe('Testing the component "Favorite"', () => {
     renderWithRouter(routeDrinks);
     await waitFor(() => expect(global.fetch).toHaveBeenCalled());
     expect(screen.getAllByRole('img')[1]).toHaveProperty('src', 'http://localhost/drinks/blackHeartIcon.svg');
-
     expect(storageLocal.getItemByKey('favoriteRecipes')).toEqual(favoriteObj);
     userEvent.click(screen.getByTestId('favorite-btn'));
     expect(screen.getAllByRole('img')[1]).toHaveProperty('src', whiteHeartDrinks);
