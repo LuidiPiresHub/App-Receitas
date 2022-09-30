@@ -3,21 +3,20 @@ import PropTypes from 'prop-types';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import { getItemByKey } from '../Services/storageLocal';
 
 const copy = require('clipboard-copy');
 
-function Favorite({ location, returnFetch }) {
+function Favorite({ location, returnFetch, id }) {
   const [copyLink, setCopyLink] = useState(false);
   const [markedFavorite, setMarkedFavorite] = useState(false);
   const [details, setDetails] = useState([]);
 
   useEffect(() => {
-    const getStorage = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
-    const favoriteList = getStorage.some((item) => item.id === details.id);
-    if (favoriteList) {
-      setMarkedFavorite(true);
-    }
-  }, [details]);
+    const getStorage = getItemByKey('favoriteRecipes');
+    const confirmIfFavorite = getStorage.some((item) => item.id === id);
+    setMarkedFavorite(confirmIfFavorite);
+  }, []);
 
   const onClickShare = () => {
     copy(window.location.href);
@@ -26,38 +25,16 @@ function Favorite({ location, returnFetch }) {
 
   const checkCategory = () => {
     const { pathname } = location;
-    if (pathname.includes('meals') && returnFetch.length !== 0) {
-      const {
-        idMeal: id,
-        strArea: nationality,
-        strCategory: category,
-        strMeal: name,
-        strMealThumb: image,
-      } = returnFetch[0];
-      const favoriteRecipes = { id,
-        type: 'meal',
-        nationality,
-        category,
-        alcoholicOrNot: '',
-        name,
-        image };
-      setDetails(favoriteRecipes);
-    }
-    if (pathname.includes('drinks') && returnFetch.length !== 0) {
-      const {
-        idDrink: id,
-        strCategory: category,
-        strAlcoholic: alcoholicOrNot,
-        strDrink: name,
-        strDrinkThumb: image,
-      } = returnFetch[0];
-      const favoriteRecipes = { id,
-        type: 'drink',
-        nationality: '',
-        category,
-        alcoholicOrNot,
-        name,
-        image };
+    if (returnFetch.length !== 0) {
+      const favoriteRecipes = {
+        id: returnFetch[0]?.idMeal || returnFetch[0]?.idDrink,
+        type: pathname.includes('meals') ? 'meal' : 'drink',
+        nationality: returnFetch[0]?.strArea || '',
+        category: returnFetch[0]?.strCategory,
+        alcoholicOrNot: returnFetch[0]?.strAlcoholic || '',
+        name: returnFetch[0]?.strMeal || returnFetch[0]?.strDrink,
+        image: returnFetch[0]?.strMealThumb || returnFetch[0]?.strDrinkThumb,
+      };
       setDetails(favoriteRecipes);
     }
   };
@@ -73,11 +50,11 @@ function Favorite({ location, returnFetch }) {
       setMarkedFavorite(false);
     }
     if (!markedFavorite) {
-      const getStorage = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+      const getStorage = getItemByKey('favoriteRecipes');
       const union = [...getStorage, details];
       localStorage.setItem('favoriteRecipes', JSON.stringify(union));
     } else {
-      const getStorage = JSON.parse(localStorage.getItem('favoriteRecipes')) || [];
+      const getStorage = getItemByKey('favoriteRecipes');
       const filterFav = getStorage.filter((obj) => obj.id !== details.id);
       localStorage.setItem('favoriteRecipes', JSON.stringify(filterFav));
     }
@@ -116,6 +93,7 @@ Favorite.propTypes = {
     pathname: PropTypes.string.isRequired,
   }).isRequired,
   returnFetch: PropTypes.arrayOf(Object).isRequired,
+  id: PropTypes.string.isRequired,
 };
 
 export default Favorite;
