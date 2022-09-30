@@ -3,7 +3,41 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Favorite from '../Components/Favorite';
 import ProgressSection from '../Components/ProgressSection';
-import { fetchApiDrinks, fetchApiMeals } from '../Services/api';
+import {
+  fetchAllDrinks,
+  fetchAllMeals,
+  fetchApiDrinks,
+  fetchApiMeals,
+} from '../Services/api';
+
+import './styles/style.css';
+
+const DISPLAY_LIMIT = 6;
+
+const whatFood = (urlPath) => {
+  if (urlPath.includes('meals')) {
+    return 'Meal';
+  }
+  return 'Drink';
+};
+
+const getIngredientsAndMeasures = (object) => {
+  const entries = Object.entries(object[0]);
+  const newArr = [];
+  const measures = entries.filter((entry) => entry[0].includes('strMeasure'));
+  const ingredients = entries.filter((entry) => entry[0].includes('strIngredient'));
+  measures.forEach((measure, index) => {
+    if (
+      measures[index][1] !== null
+      && ingredients[index][1] !== null
+      && measures[index][1] !== ''
+      && ingredients[index][1] !== ''
+    ) {
+      newArr.push(`${measures[index][1]} - ${ingredients[index][1]}`);
+    }
+  });
+  return newArr;
+};
 
 export default function RecipeDetails({ location: { pathname }, location }) {
   const { id } = useParams();

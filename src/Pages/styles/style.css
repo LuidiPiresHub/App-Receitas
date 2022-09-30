@@ -1,20 +1,16 @@
-#app {
-    height: 100%
-}
-
 html,
 body {
-    position: relative;
-    height: 100%;
+  height: 100%;
+  position: relative;
 }
 
 body {
-    background: #eee;
-    font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-    font-size: 14px;
-    color: #000;
-    margin: 0;
-    padding: 0;
+  background: #eee;
+  color: black;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  margin: 0;
+  padding: 0;
 }
 
 .swiper {
