@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 import Header from '../Components/Header';
 import { getItemByKey } from '../Services/storageLocal';
 import shareIcon from '../images/shareIcon.svg';
@@ -7,21 +8,50 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 const copy = require('clipboard-copy');
 
-export default function FavoriteRecipes({ location }) {
+export default function FavoriteRecipes() {
+  const [initialFavorites, setInitialFavorites] = useState([]);
   const [favorites, setFavorites] = useState([]);
   const [copyLink, setCopyLink] = useState(false);
+  const [filter, setFilter] = useState();
 
   useEffect(() => {
     const getStorage = getItemByKey('favoriteRecipes');
     if (getStorage.lengh !== 0) {
       setFavorites(getStorage);
-      console.log(favorites);
+      setInitialFavorites(getStorage);
+      setFilter('All');
     }
   }, []);
 
-  const onClickShare = () => {
-    copy(window.location.href);
+  useEffect(() => {
+    const updateFilter = () => {
+      if (filter === 'All') {
+        setFavorites(initialFavorites);
+      } else {
+        const filteredFavorites = initialFavorites.filter((item) => item.type === filter);
+        setFavorites(filteredFavorites);
+      }
+    };
+    updateFilter();
+  }, [filter]);
+
+  const onClickShare = (type, id) => {
+    const split = window.location.href.split('/');
+    const url = `${split[0]}//${split[2]}/${type}s/${id}`;
+    copy(url);
     setCopyLink(true);
+  };
+
+  const unFavorite = (id) => {
+    const newFavorites = initialFavorites.filter((item) => item.id !== id);
+    localStorage.setItem('favoriteRecipes', JSON.stringify(newFavorites));
+    setInitialFavorites(newFavorites);
+    if (filter === 'All') {
+      setFavorites(newFavorites);
+    } else {
+      const filteredFavorites = newFavorites.filter((item) => item.type === filter);
+      setFavorites(filteredFavorites);
+    }
   };
 
   return (
@@ -31,18 +61,21 @@ export default function FavoriteRecipes({ location }) {
         <button
           type="button"
           data-testid="filter-by-all-btn"
+          onClick={ () => setFilter('All') }
         >
           All
         </button>
         <button
           type="button"
           data-testid="filter-by-meal-btn"
+          onClick={ () => setFilter('meal') }
         >
           Filter Meals
         </button>
         <button
           type="button"
           data-testid="filter-by-drink-btn"
+          onClick={ () => setFilter('drink') }
         >
           Filter Drinks
         </button>
@@ -53,20 +86,22 @@ export default function FavoriteRecipes({ location }) {
             if (item.type === 'meal') {
               return (
                 <div key={ i }>
-                  <img
-                    src={ item.image }
-                    alt=""
-                    data-testid={ `${i}-horizontal-image` }
-                  />
-                  <h5 data-testid={ `${i}-horizontal-name` }>{ item.name }</h5>
-                  <p data-testid={ `${i}-horizontal-top-text` }>
-                    { `'${item.nationality} - ${item.category}'` }
-                  </p>
+                  <Link to={ `/${item.type}s/${item.id}` }>
+                    <img
+                      src={ item.image }
+                      alt=""
+                      data-testid={ `${i}-horizontal-image` }
+                    />
+                    <h5 data-testid={ `${i}-horizontal-name` }>{ item.name }</h5>
+                    <p data-testid={ `${i}-horizontal-top-text` }>
+                      { `'${item.nationality} - ${item.category}'` }
+                    </p>
+                  </Link>
                   <button
                     type="button"
                     data-testid={ `${i}-horizontal-share-btn` }
                     src={ shareIcon }
-                    onClick={ onClickShare }
+                    onClick={ () => onClickShare(item.type, item.id) }
                   >
                     <img src={ shareIcon } alt="" />
                   </button>
@@ -74,6 +109,7 @@ export default function FavoriteRecipes({ location }) {
                     type="button"
                     data-testid={ `${i}-horizontal-favorite-btn` }
                     src={ blackHeartIcon }
+                    onClick={ () => unFavorite(item.id) }
                   >
                     <img src={ blackHeartIcon } alt="" />
                   </button>
@@ -82,20 +118,22 @@ export default function FavoriteRecipes({ location }) {
             }
             return (
               <div key={ i }>
-                <img
-                  src={ item.image }
-                  alt=""
-                  data-testid={ `${i}-horizontal-image` }
-                />
-                <h5 data-testid={ `${i}-horizontal-name` }>{ item.name }</h5>
-                <p data-testid={ `${i}-horizontal-top-text` }>
-                  { item.alcoholicOrNot }
-                </p>
+                <Link to={ `/${item.type}s/${item.id}` }>
+                  <img
+                    src={ item.image }
+                    alt=""
+                    data-testid={ `${i}-horizontal-image` }
+                  />
+                  <h5 data-testid={ `${i}-horizontal-name` }>{ item.name }</h5>
+                  <p data-testid={ `${i}-horizontal-top-text` }>
+                    { item.alcoholicOrNot }
+                  </p>
+                </Link>
                 <button
                   type="button"
                   data-testid={ `${i}-horizontal-share-btn` }
                   src={ shareIcon }
-                  onClick={ onClickShare }
+                  onClick={ () => onClickShare(item.type, item.id) }
                 >
                   <img src={ shareIcon } alt="" />
                 </button>
@@ -103,6 +141,7 @@ export default function FavoriteRecipes({ location }) {
                   type="button"
                   data-testid={ `${i}-horizontal-favorite-btn` }
                   src={ blackHeartIcon }
+                  onClick={ () => unFavorite(item.id) }
                 >
                   <img src={ blackHeartIcon } alt="" />
                 </button>
@@ -116,7 +155,3 @@ export default function FavoriteRecipes({ location }) {
     </div>
   );
 }
-
-FavoriteRecipes.propTypes = {
-  location: PropTypes.shape({ String }).isRequired,
-};
