@@ -8,6 +8,7 @@ const containerStyles = {
   margin: '5px',
   gap: '2px',
   justifyContent: 'center',
+  marginBottom: '20px',
 };
 
 export default function CategoriesSelector({ pathname, toggleFilter, setFilter }) {
@@ -35,6 +36,8 @@ export default function CategoriesSelector({ pathname, toggleFilter, setFilter }
   return (
     <div style={ containerStyles }>
       <Button
+        style={ { backgroundColor: '#d01919' } }
+        variant="danger"
         data-testid="All-category-filter"
         onClick={ () => setFilter('All') }
       >
@@ -42,6 +45,8 @@ export default function CategoriesSelector({ pathname, toggleFilter, setFilter }
       </Button>
       {categories.map((categorie, i) => (
         <Button
+          style={ { backgroundColor: '#d01919' } }
+          variant="danger"
           key={ i }
           data-testid={ `${categorie.strCategory}-category-filter` }
           onClick={ () => toggleFilter(categorie.strCategory) }

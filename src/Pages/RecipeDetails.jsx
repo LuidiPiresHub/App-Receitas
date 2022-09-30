@@ -11,7 +11,7 @@ import {
   fetchApiMeals,
 } from '../Services/api';
 
-import './styles/style.css';
+import '../styles/style.css';
 
 const DISPLAY_LIMIT = 6;
 

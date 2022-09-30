@@ -1,7 +1,9 @@
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faPlateUtensils } from '@fortawesome/sharp-solid-svg-icons';
 import React, { useState } from 'react';
 import { Form, Button, Container } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
-import './styles/Login.css';
+import '../styles/Login.css';
 
 const MAX_LENGTH_PASSWORD = 6;
 
@@ -42,7 +44,8 @@ export default function Login() {
 
   return (
     <div className="bgStyles">
-      <h1>Login to continue</h1>
+      <FontAwesomeIcon icon={ faPlateUtensils } />
+      <h1>Login to continue:</h1>
       <Container className="containerStyles">
         <Form className="formStyles">
           <Form.Group style={ { marginBottom: '10px' } }>
@@ -52,7 +55,7 @@ export default function Login() {
               name="email"
               value={ login.email }
               id="email"
-              placeholder="Enter your email:"
+              placeholder="Your email:"
               data-testid="email-input"
               onChange={ handleChange }
             />
@@ -64,14 +67,14 @@ export default function Login() {
               name="password"
               value={ login.password }
               id="password"
-              placeholder="Enter your password:"
+              placeholder="Your password:"
               data-testid="password-input"
               onChange={ handleChange }
             />
           </Form.Group>
           <Button
             type="button"
-            style={ { backgroundColor: '#140f0f' } }
+            variant="dark"
             data-testid="login-submit-btn"
             disabled={ isDisabled }
             onClick={ onClickEnter }
