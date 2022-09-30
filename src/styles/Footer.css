@@ -1,10 +1,6 @@
 .footer {
   background-color: #161616;
   bottom: 0;
-
-  /* border-radius: 5px 0; */
-
-  /* border: #161616 solid 1px; */
   display: flex;
   justify-content: space-evenly;
   position: fixed;
