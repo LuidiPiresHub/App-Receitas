@@ -53,22 +53,26 @@ export default function RecipeInProgress({ location: { pathname }, location }) {
 
   const renderCheckboxFromStorage = () => {
     const local = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    const foodArray = local[translate[whatFood(pathname)]][id];
-    if (foodArray) {
-      setStorageReturn(foodArray);
+    if (local) {
+      const foodArray = local[translate[whatFood(pathname)]][id];
+      if (foodArray) {
+        setStorageReturn(foodArray);
+      }
     }
   };
 
   useEffect(() => {
     const handleInputs = () => {
       const local = JSON.parse(localStorage.getItem('inProgressRecipes'));
-      const localStorageIds = local[translate[whatFood(pathname)]][id];
-      const bools = [true];
-      if (localStorageIds && returnFetch.length > 0) {
-        const ingrediesntLength = getIngredientsAndMeasures(returnFetch).length;
-        bools.push(localStorageIds.length !== ingrediesntLength);
+      if (local) {
+        const localStorageIds = local[translate[whatFood(pathname)]][id];
+        const bools = [true];
+        if (localStorageIds && returnFetch.length > 0) {
+          const ingrediesntLength = getIngredientsAndMeasures(returnFetch).length;
+          bools.push(localStorageIds.length !== ingrediesntLength);
+        }
+        setBool(() => bools.every((falsy) => falsy));
       }
-      setBool(() => bools.every((falsy) => falsy));
     };
     handleInputs();
   }, [call, returnFetch]);
@@ -83,28 +87,30 @@ export default function RecipeInProgress({ location: { pathname }, location }) {
   const handleStorage = (ingredientId, ingredient) => {
     const food = translate[whatFood(pathname)];
     const foodStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    if (Object.entries(foodStorage[food]).length > 0
-    && foodStorage[food][ingredientId] !== undefined) {
-      let allIngredients = foodStorage[food][ingredientId];
-      const exists = allIngredients.includes(ingredient);
-      if (exists) {
-        allIngredients.splice(allIngredients.indexOf(ingredient), 1);
-        foodStorage[food][ingredientId] = allIngredients;
-        if (foodStorage[food][ingredientId].length === 0) {
-          delete foodStorage[food][ingredientId];
+    if (foodStorage) {
+      if (Object.entries(foodStorage[food]).length > 0
+      && foodStorage[food][ingredientId] !== undefined) {
+        let allIngredients = foodStorage[food][ingredientId];
+        const exists = allIngredients.includes(ingredient);
+        if (exists) {
+          allIngredients.splice(allIngredients.indexOf(ingredient), 1);
+          foodStorage[food][ingredientId] = allIngredients;
+          if (foodStorage[food][ingredientId].length === 0) {
+            delete foodStorage[food][ingredientId];
+          }
+        } else {
+          allIngredients = [...allIngredients, ingredient];
+          foodStorage[food][ingredientId] = allIngredients;
         }
       } else {
-        allIngredients = [...allIngredients, ingredient];
-        foodStorage[food][ingredientId] = allIngredients;
+        const ingredientObj = {
+          ...foodStorage[food],
+          [ingredientId]: [ingredient],
+        };
+        foodStorage[food] = ingredientObj;
       }
-    } else {
-      const ingredientObj = {
-        ...foodStorage[food],
-        [ingredientId]: [ingredient],
-      };
-      foodStorage[food] = ingredientObj;
+      localStorage.setItem('inProgressRecipes', JSON.stringify(foodStorage));
     }
-    localStorage.setItem('inProgressRecipes', JSON.stringify(foodStorage));
   };
 
   const handleCheckbox = (target, ingredientId, ingredient) => {
@@ -149,6 +155,7 @@ export default function RecipeInProgress({ location: { pathname }, location }) {
                     key={ `${ingredient}-${index}` }
                     id={ index }
                     defaultChecked={ storageReturn.includes(ingredient) }
+                    // checked={ storageReturn.includes(ingredient) }
                     onChange={ ({ target }) => {
                       handleCheckbox(target, returnFetch[0][`id${foodType}`], ingredient);
                       setCall(!call);

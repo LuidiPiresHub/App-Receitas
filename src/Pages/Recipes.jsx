@@ -13,8 +13,6 @@ const containerStyles = {
   margin: '10px',
   gap: '15px',
   justifyContent: 'center',
-  maxHeigth: '10vh',
-  overflowY: 'scroll',
 };
 
 export default function Recipes({ location: { pathname } }) {

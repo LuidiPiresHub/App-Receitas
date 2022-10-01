@@ -35,6 +35,7 @@ export default function SearchBar() {
               id="Ingredient"
               name="radio"
               value="Ingredient"
+              defaultChecked
               data-testid="ingredient-search-radio"
               onChange={ ({ target: { value } }) => setRadio(value) }
             />
