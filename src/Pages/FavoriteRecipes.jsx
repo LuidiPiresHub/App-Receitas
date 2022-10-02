@@ -128,7 +128,7 @@ export default function FavoriteRecipes() {
                   <p data-testid={ `${i}-horizontal-top-text` }>
                     { item.alcoholicOrNot }
                   </p>
-                </Link>
+                </Link>zz
                 <button
                   type="button"
                   data-testid={ `${i}-horizontal-share-btn` }
