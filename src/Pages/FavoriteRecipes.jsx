@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 // import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Header from '../Components/Header';
-import { getItemByKey } from '../Services/storageLocal';
+// import { getItemByKey } from '../Services/storageLocal';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 

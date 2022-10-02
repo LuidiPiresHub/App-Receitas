@@ -31,10 +31,12 @@ export default function RecipeInProgress({ location: { pathname }, location }) {
     const measures = entries.filter((entry) => entry[0].includes('strMeasure'));
     const ingredients = entries.filter((entry) => entry[0].includes('strIngredient'));
     measures.forEach((_, index) => {
-      if (measures[index][1] !== null
+      if (
+        measures[index][1] !== null
         && ingredients[index][1] !== null
         && measures[index][1] !== ''
-        && ingredients[index][1] !== '') {
+        && ingredients[index][1] !== ''
+      ) {
         newArr.push(`${measures[index][1]} - ${ingredients[index][1]}`);
       }
     });
@@ -75,12 +77,13 @@ export default function RecipeInProgress({ location: { pathname }, location }) {
       }
     };
     handleInputs();
+    renderCheckboxFromStorage();
   }, [call, returnFetch]);
 
   useEffect(() => {
     callingFetch();
     renderCheckboxFromStorage();
-  }, [pathname]);
+  }, []);
 
   const foodType = whatFood(pathname);
 
@@ -88,8 +91,10 @@ export default function RecipeInProgress({ location: { pathname }, location }) {
     const food = translate[whatFood(pathname)];
     const foodStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
     if (foodStorage) {
-      if (Object.entries(foodStorage[food]).length > 0
-      && foodStorage[food][ingredientId] !== undefined) {
+      if (
+        Object.entries(foodStorage[food]).length > 0
+        && foodStorage[food][ingredientId] !== undefined
+      ) {
         let allIngredients = foodStorage[food][ingredientId];
         const exists = allIngredients.includes(ingredient);
         if (exists) {
@@ -121,9 +126,11 @@ export default function RecipeInProgress({ location: { pathname }, location }) {
     } else {
       nextSibling.style.textDecoration = '';
     }
+    renderCheckboxFromStorage();
   };
 
   if (returnFetch.length > 0) {
+    console.log(storageReturn);
     const ingredientsMeasures = getIngredientsAndMeasures(returnFetch);
     return (
       <main>
@@ -138,11 +145,13 @@ export default function RecipeInProgress({ location: { pathname }, location }) {
             width="300px"
             height="300px"
           />
-          {foodType === 'Meal'
-            ? <h3 data-testid="recipe-category">{returnFetch[0].strCategory}</h3>
-            : <h3 data-testid="recipe-category">{returnFetch[0].strAlcoholic}</h3>}
+          {foodType === 'Meal' ? (
+            <h3 data-testid="recipe-category">{returnFetch[0].strCategory}</h3>
+          ) : (
+            <h3 data-testid="recipe-category">{returnFetch[0].strAlcoholic}</h3>
+          )}
           <section>
-            {ingredientsMeasures.map((ingredient, index) => (
+            { ingredientsMeasures.map((ingredient, index) => (
               <div key={ index }>
                 <label
                   className="checkBoxContainer"
@@ -154,18 +163,24 @@ export default function RecipeInProgress({ location: { pathname }, location }) {
                     type="checkbox"
                     key={ `${ingredient}-${index}` }
                     id={ index }
-                    defaultChecked={ storageReturn.includes(ingredient) }
+                    defaultChecked={ storageReturn.includes(ingredient)
+                      || storageReturn === 0 }
                     // checked={ storageReturn.includes(ingredient) }
                     onChange={ ({ target }) => {
-                      handleCheckbox(target, returnFetch[0][`id${foodType}`], ingredient);
+                      handleCheckbox(
+                        target,
+                        returnFetch[0][`id${foodType}`],
+                        ingredient,
+                      );
                       setCall(!call);
                     } }
                   />
                   <p
-                    style={
-                      { textDecoration:
-                         storageReturn.includes(ingredient) ? 'line-through' : '' }
-                    }
+                    style={ {
+                      textDecoration: storageReturn.includes(ingredient)
+                        ? 'line-through'
+                        : '',
+                    } }
                   >
                     {ingredient}
                   </p>
@@ -174,14 +189,18 @@ export default function RecipeInProgress({ location: { pathname }, location }) {
             ))}
           </section>
           <p data-testid="instructions">{returnFetch[0].strInstructions}</p>
-          { foodType === 'Meal' ? <iframe
-            title={ `${foodType}-Preparation` }
-            width="420"
-            height="315"
-            allowFullScreen
-            data-testid="video"
-            src={ returnFetch[0].strYoutube.replace('watch?v=', 'embed/') }
-          /> : '' }
+          {foodType === 'Meal' ? (
+            <iframe
+              title={ `${foodType}-Preparation` }
+              width="420"
+              height="315"
+              allowFullScreen
+              data-testid="video"
+              src={ returnFetch[0].strYoutube.replace('watch?v=', 'embed/') }
+            />
+          ) : (
+            ''
+          )}
         </section>
         <section>
           <button
@@ -196,9 +215,7 @@ export default function RecipeInProgress({ location: { pathname }, location }) {
       </main>
     );
   }
-  return (
-    <div />
-  );
+  return <div />;
 }
 
 RecipeInProgress.propTypes = {
