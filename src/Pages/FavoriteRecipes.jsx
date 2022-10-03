@@ -88,6 +88,7 @@ export default function FavoriteRecipes() {
                 <div key={ i }>
                   <Link to={ `/${item.type}s/${item.id}` }>
                     <img
+                      style={ { width: '80px' } }
                       src={ item.image }
                       alt=""
                       data-testid={ `${i}-horizontal-image` }
@@ -120,6 +121,7 @@ export default function FavoriteRecipes() {
               <div key={ i }>
                 <Link to={ `/${item.type}s/${item.id}` }>
                   <img
+                    style={ { width: '80px' } }
                     src={ item.image }
                     alt=""
                     data-testid={ `${i}-horizontal-image` }
@@ -128,7 +130,7 @@ export default function FavoriteRecipes() {
                   <p data-testid={ `${i}-horizontal-top-text` }>
                     { item.alcoholicOrNot }
                   </p>
-                </Link>zz
+                </Link>
                 <button
                   type="button"
                   data-testid={ `${i}-horizontal-share-btn` }
