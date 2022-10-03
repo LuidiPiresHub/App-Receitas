@@ -106,7 +106,12 @@ export default function RecipeDetails({ location: { pathname }, location }) {
     );
   }
   return (
-    <div />
+    <main>
+      <section>
+        <ProgressSection recipeObj={ returnFetch[0] } type={ type } id={ id } />
+        <Favorite location={ location } returnFetch={ returnFetch } id={ id } />
+      </section>
+    </main>
   );
 }
 

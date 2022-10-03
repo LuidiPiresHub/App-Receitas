@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 // import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import Header from '../Components/Header';
-// import { getItemByKey } from '../Services/storageLocal';
+import { getItemByKey } from '../Services/storageLocal';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 
@@ -88,6 +88,7 @@ export default function FavoriteRecipes() {
                 <div key={ i }>
                   <Link to={ `/${item.type}s/${item.id}` }>
                     <img
+                      style={ { width: '80px' } }
                       src={ item.image }
                       alt=""
                       data-testid={ `${i}-horizontal-image` }
@@ -120,6 +121,7 @@ export default function FavoriteRecipes() {
               <div key={ i }>
                 <Link to={ `/${item.type}s/${item.id}` }>
                   <img
+                    style={ { width: '80px' } }
                     src={ item.image }
                     alt=""
                     data-testid={ `${i}-horizontal-image` }
