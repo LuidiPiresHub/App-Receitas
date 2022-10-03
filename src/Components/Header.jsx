@@ -2,9 +2,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useContext, useEffect, useState } from 'react';
 import { ButtonGroup, Container } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
-import { faUser, faUtensils } from '@fortawesome/free-solid-svg-icons';
+import { faUtensils } from '@fortawesome/free-solid-svg-icons';
 import { faGlassMartiniAlt, faPlateUtensils } from '@fortawesome/sharp-solid-svg-icons';
 import { faSearch } from '@fortawesome/fontawesome-free-solid';
+import profileIcon from '../images/profileIcon.svg';
+import searchIcon from '../images/searchIcon.svg';
 import RecipesAppContext from '../Context/RecipesAppContext';
 import '../styles/Header.css';
 
@@ -43,7 +45,6 @@ export default function Header() {
           Recipes App
           <FontAwesomeIcon
             icon={ faPlateUtensils }
-            data-testid="search-top-btn"
             alt="searchBar"
           />
         </h4>
@@ -55,10 +56,11 @@ export default function Header() {
               type="button"
               onClick={ () => setBoolHeader(!boolHeader) }
             >
-              <FontAwesomeIcon
+              <img
                 icon={ faSearch }
                 data-testid="search-top-btn"
                 alt="searchBar"
+                src={ searchIcon }
               />
             </button>
           )}
@@ -69,10 +71,10 @@ export default function Header() {
             data-testid="profileBtn"
             onClick={ () => history.push('/profile') }
           >
-            <FontAwesomeIcon
-              icon={ faUser }
+            <img
               data-testid="profile-top-btn"
               alt="userPhoto"
+              src={ profileIcon }
             />
           </button>
         </ButtonGroup>
@@ -82,7 +84,6 @@ export default function Header() {
           {translate[pathname]}
           <FontAwesomeIcon
             icon={ pathname.includes('meals') ? faUtensils : faGlassMartiniAlt }
-            data-testid="search-top-btn"
             alt="searchBar"
           />
         </h1>
