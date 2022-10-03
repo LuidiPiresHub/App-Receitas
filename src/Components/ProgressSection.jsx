@@ -51,6 +51,7 @@ export default function ProgressSection({ /* recipeObj, */ type, id }) {
           }
         >
           <Button
+            variant="dark"
             data-testid="start-recipe-btn"
             style={ { position: 'fixed', bottom: 0, width: '100%', borderRadius: 0 } }
           >

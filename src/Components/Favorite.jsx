@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart, faHeartCircleCheck } from '@fortawesome/sharp-solid-svg-icons';
+import { faShareAlt } from '@fortawesome/free-solid-svg-icons';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
@@ -67,7 +70,7 @@ function Favorite({ location, returnFetch, id }) {
         data-testid="share-btn"
         onClick={ onClickShare }
       >
-        <img src={ shareIcon } alt="" />
+        <FontAwesomeIcon icon={ faShareAlt } src={ shareIcon } alt="" />
       </button>
       <button
         type="button"
@@ -75,7 +78,8 @@ function Favorite({ location, returnFetch, id }) {
         onClick={ onClickFavorite }
         src={ markedFavorite ? blackHeartIcon : whiteHeartIcon }
       >
-        <img
+        <FontAwesomeIcon
+          icon={ markedFavorite ? faHeartCircleCheck : faHeart }
           src={ markedFavorite ? blackHeartIcon : whiteHeartIcon }
           alt=""
         />

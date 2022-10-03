@@ -1,0 +1,59 @@
+.recipeDetailsContainer {
+  display: flex;
+  flex-direction: column;
+}
+
+hr {
+  margin: 15px;
+}
+
+.cardImage {
+  background-repeat: no-repeat;
+  background-size: cover;
+  filter: brightness(0.9);
+  height: 35vh;
+  object-fit: cover;
+}
+
+.overlay {
+  display: flex;
+  flex-direction: column;
+}
+
+.cardHeader {
+  align-items: center;
+  display: flex;
+  font-size: 2rem;
+  font-weight: 800;
+  justify-content: space-between;
+}
+
+.cardHeader button {
+  background-color: transparent;
+  border: none;
+  margin-right: 4px;
+}
+
+.cardHeader button svg {
+  color: #f6f6f6;
+}
+
+.recipeCategory {
+  margin-left: 4px;
+  transform: translateY(6px);
+}
+
+.cardTitle {
+  color: #f6f6f6;
+  text-shadow: 3px 3px 5px
+    #16161673 , -1px -1px 5px
+    #16161673 , 1px -1px 5px
+    #16161673 , -1px 1px 5px
+    #16161673 , 1px 1px 5px
+    #16161673;
+  -webkit-text-stroke-color: #16161626;
+}
+
+.recipeDetailsContainer article {
+  padding: 10px;
+}
