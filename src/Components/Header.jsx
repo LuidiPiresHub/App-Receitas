@@ -2,12 +2,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useContext, useEffect, useState } from 'react';
 import { ButtonGroup, Container } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
-import { faUser, faUtensils } from '@fortawesome/free-solid-svg-icons';
+import { faUtensils } from '@fortawesome/free-solid-svg-icons';
 import { faGlassMartiniAlt, faPlateUtensils } from '@fortawesome/sharp-solid-svg-icons';
 import { faSearch } from '@fortawesome/fontawesome-free-solid';
+import profileIcon from '../images/profileIcon.svg';
+import searchIcon from '../images/searchIcon.svg';
 import RecipesAppContext from '../Context/RecipesAppContext';
-import profileIcon from '../images/profileIcon.svg'
-import searchIcon from '../images/searchIcon.svg'
 import '../styles/Header.css';
 
 const translate = {
@@ -56,7 +56,7 @@ export default function Header() {
               type="button"
               onClick={ () => setBoolHeader(!boolHeader) }
             >
-              <FontAwesomeIcon
+              <img
                 icon={ faSearch }
                 src={ searchIcon }
                 data-testid="search-top-btn"
