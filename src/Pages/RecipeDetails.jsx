@@ -100,7 +100,7 @@ export default function RecipeDetails({ location: { pathname }, location }) {
         </section>
         <section>
           <Carousel carousel={ carousel } />
-          <ProgressSection type={ foodType } id={ id } />
+          <ProgressSection type={ foodType === 'Meal' ? 'meals' : 'drinks' } id={ id } />
         </section>
       </main>
     );
@@ -108,7 +108,7 @@ export default function RecipeDetails({ location: { pathname }, location }) {
   return (
     <main>
       <section>
-        <ProgressSection recipeObj={ returnFetch[0] } type={ type } id={ id } />
+        <ProgressSection type={ foodType === 'Meal' ? 'meals' : 'drinks' } id={ id } />
         <Favorite location={ location } returnFetch={ returnFetch } id={ id } />
       </section>
     </main>

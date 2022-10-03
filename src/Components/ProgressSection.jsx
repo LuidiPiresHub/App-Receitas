@@ -21,6 +21,7 @@ export default function ProgressSection({ /* recipeObj, */ type, id }) {
         }
       }
     };
+    console.log(type);
     handleType();
   }, [type]);
 
