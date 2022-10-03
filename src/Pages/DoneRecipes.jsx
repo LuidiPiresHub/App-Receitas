@@ -40,18 +40,6 @@ export default function DoneRecipes() {
     setCopyLink(true);
   };
 
-  // const unFavorite = (id) => {
-  //   const newFavorites = initialFavorites.filter((item) => item.id !== id);
-  //   localStorage.setItem('favoriteRecipes', JSON.stringify(newFavorites));
-  //   setInitialFavorites(newFavorites);
-  //   if (filter === 'All') {
-  //     setFavorites(newFavorites);
-  //   } else {
-  //     const filteredFavorites = newFavorites.filter((item) => item.type === filter);
-  //     setFavorites(filteredFavorites);
-  //   }
-  // };
-
   return (
     <div>
       <Header />
