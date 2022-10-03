@@ -1,10 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import Header from '../Components/Header';
 import Footer from '../Components/Footer';
 
 export default function Profile() {
-  const { email } = JSON.parse(localStorage.getItem('user'));
+  const [userEmail, setUserEmail] = useState('');
+  const local = JSON.parse(localStorage.getItem('user'));
+  if (local) {
+    const { email } = local;
+    setUserEmail(email);
+  }
   const history = useHistory();
 
   const handleLogoutButton = () => {
@@ -16,7 +21,7 @@ export default function Profile() {
     <div>
       <Header />
       <section>
-        <h3 data-testid="profile-email">{email}</h3>
+        <h3 data-testid="profile-email">{userEmail}</h3>
         <button
           type="button"
           data-testid="profile-done-btn"
