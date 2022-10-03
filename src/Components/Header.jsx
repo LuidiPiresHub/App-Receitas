@@ -6,6 +6,8 @@ import { faUser, faUtensils } from '@fortawesome/free-solid-svg-icons';
 import { faGlassMartiniAlt, faPlateUtensils } from '@fortawesome/sharp-solid-svg-icons';
 import { faSearch } from '@fortawesome/fontawesome-free-solid';
 import RecipesAppContext from '../Context/RecipesAppContext';
+import profileIcon from '../images/profileIcon.svg'
+import searchIcon from '../images/searchIcon.svg'
 import '../styles/Header.css';
 
 const translate = {
@@ -43,7 +45,6 @@ export default function Header() {
           Recipes App
           <FontAwesomeIcon
             icon={ faPlateUtensils }
-            data-testid="search-top-btn"
             alt="searchBar"
           />
         </h4>
@@ -57,6 +58,7 @@ export default function Header() {
             >
               <FontAwesomeIcon
                 icon={ faSearch }
+                src={ searchIcon }
                 data-testid="search-top-btn"
                 alt="searchBar"
               />
@@ -70,8 +72,9 @@ export default function Header() {
             onClick={ () => history.push('/profile') }
           >
             <FontAwesomeIcon
-              icon={ faUser }
+              src={ profileIcon }
               data-testid="profile-top-btn"
+              icon={ faUser }
               alt="userPhoto"
             />
           </button>
@@ -82,7 +85,6 @@ export default function Header() {
           {translate[pathname]}
           <FontAwesomeIcon
             icon={ pathname.includes('meals') ? faUtensils : faGlassMartiniAlt }
-            data-testid="search-top-btn"
             alt="searchBar"
           />
         </h1>

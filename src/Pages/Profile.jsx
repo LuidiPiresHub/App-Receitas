@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import Header from '../Components/Header';
 import Footer from '../Components/Footer';
@@ -6,10 +6,14 @@ import Footer from '../Components/Footer';
 export default function Profile() {
   const [userEmail, setUserEmail] = useState('');
   const local = JSON.parse(localStorage.getItem('user'));
-  if (local) {
-    const { email } = local;
-    setUserEmail(email);
-  }
+
+  useEffect(() => {
+    if (local) {
+      const { email } = local;
+      setUserEmail(email);
+    }
+  }, [local]);
+
   const history = useHistory();
 
   const handleLogoutButton = () => {
