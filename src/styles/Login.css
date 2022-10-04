@@ -1,6 +1,8 @@
 .bgStyles {
   align-items: flex-start;
-  background-color: #d01919;
+  background-image: url('https://mfiles.alphacoders.com/968/968727.jpg');
+  background-position: 0 -150px;
+  background-size: 100%;
   display: flex;
   flex-direction: column;
   height: 100vh;
