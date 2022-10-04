@@ -4,12 +4,14 @@ import { Button, Card } from 'react-bootstrap';
 import { useHistory, useParams } from 'react-router-dom';
 import Favorite from '../Components/Favorite';
 import { fetchApiDrinks, fetchApiMeals } from '../Services/api';
+import saveRecipesOnLocalStorage from '../Components/SaveDoneRecipes';
 import '../styles/RecipesDetails.css';
 
 export default function RecipeInProgress({ location: { pathname }, location }) {
   const { id } = useParams();
   const [returnFetch, setReturnFetch] = useState([]);
-  const [bool, setBool] = useState(true);
+  // const [storageReturn, setStorageReturn] = useState([]);
+  // const [bool, setBool] = useState(true);
   const [call, setCall] = useState(false);
   const [ingredientsValue, setIngredientsValue] = useState([]);
   const history = useHistory();
@@ -19,10 +21,7 @@ export default function RecipeInProgress({ location: { pathname }, location }) {
     }
     return 'Drink';
   };
-  const translate = {
-    Meal: 'meals',
-    Drink: 'drinks',
-  };
+  const translate = { Meal: 'meals', Drink: 'drinks' };
   const getIngredientsAndMeasures = (object) => {
     const entries = Object.entries(object[0]);
     const newArr = [];
@@ -58,23 +57,22 @@ export default function RecipeInProgress({ location: { pathname }, location }) {
       setIngredientsValue(foodArray);
     }
   };
-
-  useEffect(() => {
-    const handleInputs = () => {
-      const local = JSON.parse(localStorage.getItem('inProgressRecipes'));
-      if (local) {
-        const localStorageIds = local[translate[whatFood(pathname)]][id];
-        const bools = [true];
-        if (localStorageIds && returnFetch.length > 0) {
-          const ingrediesntLength = getIngredientsAndMeasures(returnFetch).length;
-          bools.push(localStorageIds.length !== ingrediesntLength);
-        }
-        setBool(() => bools.every((falsy) => falsy));
-      }
-    };
-    handleInputs();
-  }, [call, returnFetch]);
-
+  // useEffect(() => {
+  //   const handleInputs = () => {
+  //     const local = JSON.parse(localStorage.getItem('inProgressRecipes'));
+  //     if (local) {
+  //       const localStorageIds = local[translate[whatFood(pathname)]][id];
+  //       const bools = [true];
+  //       if (localStorageIds && returnFetch.length > 0) {
+  //         const ingrediesntLength = getIngredientsAndMeasures(returnFetch).length;
+  //         bools.push(localStorageIds.length !== ingrediesntLength);
+  //       }
+  //       setBool(() => bools.every((falsy) => falsy));
+  //     }
+  //   };
+  //   handleInputs();
+  //   // renderCheckboxFromStorage();
+  // }, [call, returnFetch]);
   useEffect(() => {
     callingFetch();
     renderCheckboxFromStorage();
@@ -159,8 +157,7 @@ export default function RecipeInProgress({ location: { pathname }, location }) {
             <Card.Title
               data-testid="recipe-title"
               className="cardTitle"
-              style={ { fontSize: '24px', fontWeight: '800', margin: 'auto',
-              } }
+              style={ { fontSize: '24px', fontWeight: '800', margin: 'auto' } }
             >
               <p>
                 {foodType === 'Meal'
@@ -236,8 +233,11 @@ export default function RecipeInProgress({ location: { pathname }, location }) {
             zIndex: '99' } }
           variant="dark"
           data-testid="finish-recipe-btn"
-          disabled={ bool }
-          onClick={ () => history.push('/done-recipes') }
+          // disabled={ bool }
+          onClick={ () => {
+            saveRecipesOnLocalStorage(returnFetch, pathname);
+            history.push('/done-recipes');
+          } }
         >
           FINISH RECIPE
         </Button>

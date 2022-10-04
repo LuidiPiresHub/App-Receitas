@@ -69,7 +69,6 @@ export default function DoneRecipes() {
       <section>
         {
           dones.length > 0 && dones.map((item, i) => {
-            console.log(item.tags);
             if (item.type === 'meal') {
               return (
                 <div key={ i }>
