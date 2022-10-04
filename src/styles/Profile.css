@@ -1,9 +1,11 @@
 .profile-section {
+
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
     justify-content: 'center';
     justify-items: center;
     align-items: center;
-    /* align-content: space-around; */
+    align-content: space-around;
     margin: 0px 0px 50px 0px;
 }
