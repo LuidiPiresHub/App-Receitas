@@ -215,7 +215,7 @@ export default function RecipeInProgress({ location: { pathname }, location }) {
         <article data-testid="instructions">{returnFetch[0].strInstructions}</article>
         <hr />
         {foodType === 'Meal' ? (
-          <div style={ { width: '100vw', overflowX: 'hidden' } }>
+          <div style={ { width: '100vw', overflowX: 'hidden', marginBottom: '40px' } }>
             <iframe
               title={ `${foodType}-Preparation` }
               width="420"
@@ -229,7 +229,11 @@ export default function RecipeInProgress({ location: { pathname }, location }) {
           ''
         )}
         <Button
-          style={ { borderRadius: '0', position: 'fixed', bottom: '0', width: '100%' } }
+          style={ { borderRadius: '0',
+            position: 'fixed',
+            bottom: '0',
+            width: '100%',
+            zIndex: '99' } }
           variant="dark"
           data-testid="finish-recipe-btn"
           disabled={ bool }
@@ -243,6 +247,4 @@ export default function RecipeInProgress({ location: { pathname }, location }) {
   return <div />;
 }
 
-RecipeInProgress.propTypes = {
-  location: PropTypes.shape().isRequired,
-};
+RecipeInProgress.propTypes = { location: PropTypes.shape().isRequired };
