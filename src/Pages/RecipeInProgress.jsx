@@ -3,13 +3,14 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import Favorite from '../Components/Favorite';
 import { fetchApiDrinks, fetchApiMeals } from '../Services/api';
+import saveRecipesOnLocalStorage from '../Components/SaveDoneRecipes';
 // import './style.css';
 
 export default function RecipeInProgress({ location: { pathname }, location }) {
   const { id } = useParams();
   const [returnFetch, setReturnFetch] = useState([]);
   // const [storageReturn, setStorageReturn] = useState([]);
-  const [bool, setBool] = useState(true);
+  // const [bool, setBool] = useState(true);
   const [call, setCall] = useState(false);
   const [ingredientsValue, setIngredientsValue] = useState([]);
   // const [checkboxInput, setCheckedInput] = useState([]);
@@ -64,22 +65,22 @@ export default function RecipeInProgress({ location: { pathname }, location }) {
     }
   };
 
-  useEffect(() => {
-    const handleInputs = () => {
-      const local = JSON.parse(localStorage.getItem('inProgressRecipes'));
-      if (local) {
-        const localStorageIds = local[translate[whatFood(pathname)]][id];
-        const bools = [true];
-        if (localStorageIds && returnFetch.length > 0) {
-          const ingrediesntLength = getIngredientsAndMeasures(returnFetch).length;
-          bools.push(localStorageIds.length !== ingrediesntLength);
-        }
-        setBool(() => bools.every((falsy) => falsy));
-      }
-    };
-    handleInputs();
-    // renderCheckboxFromStorage();
-  }, [call, returnFetch]);
+  // useEffect(() => {
+  //   const handleInputs = () => {
+  //     const local = JSON.parse(localStorage.getItem('inProgressRecipes'));
+  //     if (local) {
+  //       const localStorageIds = local[translate[whatFood(pathname)]][id];
+  //       const bools = [true];
+  //       if (localStorageIds && returnFetch.length > 0) {
+  //         const ingrediesntLength = getIngredientsAndMeasures(returnFetch).length;
+  //         bools.push(localStorageIds.length !== ingrediesntLength);
+  //       }
+  //       setBool(() => bools.every((falsy) => falsy));
+  //     }
+  //   };
+  //   handleInputs();
+  //   // renderCheckboxFromStorage();
+  // }, [call, returnFetch]);
 
   useEffect(() => {
     callingFetch();
@@ -206,8 +207,11 @@ export default function RecipeInProgress({ location: { pathname }, location }) {
           <button
             type="button"
             data-testid="finish-recipe-btn"
-            disabled={ bool }
-            onClick={ () => history.push('/done-recipes') }
+            // disabled={ bool }
+            onClick={ () => {
+              saveRecipesOnLocalStorage(returnFetch, pathname);
+              history.push('/done-recipes');
+            } }
           >
             FINISH RECIPE
           </button>
