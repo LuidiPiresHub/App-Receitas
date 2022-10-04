@@ -151,8 +151,6 @@ export default function RecipeInProgress({ location: { pathname }, location }) {
           <section>
             { ingredientsMeasures.map((ingredient, index) => {
               const logic = ingredientsValue.some((i) => i === ingredient);
-              // || ingredientsValue.includes(ingredient);
-              // const isChecked = logic ? 'checked' : '';
               return (
                 <div key={ index }>
                   <label
