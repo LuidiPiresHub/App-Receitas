@@ -1,5 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHeart, faHeartCircleCheck } from '@fortawesome/sharp-solid-svg-icons';
+import { faShareAlt } from '@fortawesome/free-solid-svg-icons';
 import shareIcon from '../images/shareIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
@@ -7,7 +11,8 @@ import { getItemByKey } from '../Services/storageLocal';
 
 const copy = require('clipboard-copy');
 
-function Favorite({ location, returnFetch, id }) {
+function Favorite({ location, returnFetch }) {
+  const { id } = useParams();
   const [copyLink, setCopyLink] = useState(false);
   const [markedFavorite, setMarkedFavorite] = useState(false);
   const [details, setDetails] = useState([]);
@@ -16,10 +21,10 @@ function Favorite({ location, returnFetch, id }) {
     const getStorage = getItemByKey('favoriteRecipes');
     const confirmIfFavorite = getStorage.some((item) => item.id === id);
     setMarkedFavorite(confirmIfFavorite);
-  }, []);
+  }, [id]);
 
   const onClickShare = () => {
-    copy(window.location.href);
+    copy(window.location.href.replace('/in-progress', ''));
     setCopyLink(true);
   };
 
@@ -66,8 +71,9 @@ function Favorite({ location, returnFetch, id }) {
         type="button"
         data-testid="share-btn"
         onClick={ onClickShare }
+        src={ shareIcon }
       >
-        <img src={ shareIcon } alt="" />
+        <FontAwesomeIcon icon={ faShareAlt } alt="" />
       </button>
       <button
         type="button"
@@ -75,8 +81,8 @@ function Favorite({ location, returnFetch, id }) {
         onClick={ onClickFavorite }
         src={ markedFavorite ? blackHeartIcon : whiteHeartIcon }
       >
-        <img
-          src={ markedFavorite ? blackHeartIcon : whiteHeartIcon }
+        <FontAwesomeIcon
+          icon={ markedFavorite ? faHeartCircleCheck : faHeart }
           alt=""
         />
       </button>
@@ -93,7 +99,6 @@ Favorite.propTypes = {
     pathname: PropTypes.string.isRequired,
   }).isRequired,
   returnFetch: PropTypes.arrayOf(Object).isRequired,
-  id: PropTypes.string.isRequired,
 };
 
 export default Favorite;

@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
+import { Card } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import Carousel from '../Components/Carousel';
 import Favorite from '../Components/Favorite';
@@ -10,7 +11,7 @@ import {
   fetchApiDrinks,
   fetchApiMeals,
 } from '../Services/api';
-// import './style.css';
+import '../styles/RecipesDetails.css';
 
 const DISPLAY_LIMIT = 6;
 
@@ -66,27 +67,62 @@ export default function RecipeDetails({ location: { pathname }, location }) {
   }, [pathname]);
 
   const foodType = whatFood(pathname);
-
   if (returnFetch.length > 0 && carousel.length > 0) {
     const ingredientsMeasures = getIngredientsAndMeasures(returnFetch);
     return (
-      <main>
-        <header>{foodType}</header>
-        <Favorite location={ location } returnFetch={ returnFetch } />
-        <section>
-          <h1 data-testid="recipe-title">{returnFetch[0][`str${foodType}`]}</h1>
-          <img
+      <main className="recipeDetailsContainer">
+        <Card style={ { border: 'none' } }>
+          <Card.Img
+            className="cardImage"
             src={ returnFetch[0][`str${foodType}Thumb`] }
             alt={ `${foodType}_img` }
             data-testid="recipe-photo"
-            width="300px"
-            height="300px"
           />
-          {foodType === 'Meal' ? (
-            <h3 data-testid="recipe-category">{returnFetch[0].strCategory}</h3>
-          ) : (
-            <h3 data-testid="recipe-category">{returnFetch[0].strAlcoholic}</h3>
-          )}
+          <Card.ImgOverlay className="overlay" style={ { padding: '0' } }>
+            <Card.Header
+              style={ {
+                borderRadius: '0',
+                color: '#f6f6f6',
+                backgroundColor: '#161616',
+              } }
+              className="cardHeader"
+            >
+              {foodType === 'Meal' ? (
+                <Card.Text
+                  className="recipeCategory"
+                  data-testid="recipe-category"
+                >
+                  {returnFetch[0].strCategory}
+                </Card.Text>
+              ) : (
+                <Card.Text
+                  className="recipeCategory"
+                  data-testid="recipe-category"
+                >
+                  {returnFetch[0].strAlcoholic}
+                </Card.Text>
+              )}
+              <Favorite location={ location } returnFetch={ returnFetch } />
+            </Card.Header>
+            <Card.Title
+              data-testid="recipe-title"
+              className="cardTitle"
+              style={ {
+                fontSize: '3rem',
+                fontWeight: '800',
+                margin: '18% auto',
+              } }
+            >
+              <p>
+                {foodType === 'Meal'
+                  ? returnFetch[0].strMeal
+                  : returnFetch[0].strMeal}
+              </p>
+            </Card.Title>
+          </Card.ImgOverlay>
+        </Card>
+        <section>
+          <hr />
           <ul>
             {ingredientsMeasures.map((ingredient, index) => (
               <li
@@ -97,7 +133,12 @@ export default function RecipeDetails({ location: { pathname }, location }) {
               </li>
             ))}
           </ul>
-          <p data-testid="instructions">{returnFetch[0].strInstructions}</p>
+          <hr />
+          <article data-testid="instructions">
+            {returnFetch[0].strInstructions}
+          </article>
+
+          <hr />
           {foodType === 'Meal' ? (
             <div style={ { width: '100vw', overflowX: 'hidden' } }>
               <iframe
@@ -113,6 +154,8 @@ export default function RecipeDetails({ location: { pathname }, location }) {
             ''
           )}
         </section>
+
+        <hr />
         <section>
           <Carousel carousel={ carousel } />
           <ProgressSection

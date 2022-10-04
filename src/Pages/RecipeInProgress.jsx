@@ -8,9 +8,11 @@ import { fetchApiDrinks, fetchApiMeals } from '../Services/api';
 export default function RecipeInProgress({ location: { pathname }, location }) {
   const { id } = useParams();
   const [returnFetch, setReturnFetch] = useState([]);
-  const [storageReturn, setStorageReturn] = useState([]);
+  // const [storageReturn, setStorageReturn] = useState([]);
   const [bool, setBool] = useState(true);
   const [call, setCall] = useState(false);
+  const [ingredientsValue, setIngredientsValue] = useState([]);
+  // const [checkboxInput, setCheckedInput] = useState([]);
   const history = useHistory();
 
   const whatFood = (urlPath) => {
@@ -56,10 +58,9 @@ export default function RecipeInProgress({ location: { pathname }, location }) {
   const renderCheckboxFromStorage = () => {
     const local = JSON.parse(localStorage.getItem('inProgressRecipes'));
     if (local) {
-      const foodArray = local[translate[whatFood(pathname)]][id];
-      if (foodArray) {
-        setStorageReturn(foodArray);
-      }
+      const foodArray = local[translate[whatFood(pathname)]][id] || [];
+      setIngredientsValue(foodArray);
+      // setStorageReturn(foodArray);
     }
   };
 
@@ -77,7 +78,7 @@ export default function RecipeInProgress({ location: { pathname }, location }) {
       }
     };
     handleInputs();
-    renderCheckboxFromStorage();
+    // renderCheckboxFromStorage();
   }, [call, returnFetch]);
 
   useEffect(() => {
@@ -87,50 +88,47 @@ export default function RecipeInProgress({ location: { pathname }, location }) {
 
   const foodType = whatFood(pathname);
 
-  const handleStorage = (ingredientId, ingredient) => {
+  const addInProgressMeals = (idFood, value) => {
     const food = translate[whatFood(pathname)];
-    const foodStorage = JSON.parse(localStorage.getItem('inProgressRecipes'));
-    if (foodStorage) {
-      if (
-        Object.entries(foodStorage[food]).length > 0
-        && foodStorage[food][ingredientId] !== undefined
-      ) {
-        let allIngredients = foodStorage[food][ingredientId];
-        const exists = allIngredients.includes(ingredient);
-        if (exists) {
-          allIngredients.splice(allIngredients.indexOf(ingredient), 1);
-          foodStorage[food][ingredientId] = allIngredients;
-          if (foodStorage[food][ingredientId].length === 0) {
-            delete foodStorage[food][ingredientId];
-          }
-        } else {
-          allIngredients = [...allIngredients, ingredient];
-          foodStorage[food][ingredientId] = allIngredients;
-        }
-      } else {
-        const ingredientObj = {
-          ...foodStorage[food],
-          [ingredientId]: [ingredient],
-        };
-        foodStorage[food] = ingredientObj;
-      }
-      localStorage.setItem('inProgressRecipes', JSON.stringify(foodStorage));
+    if (!JSON.parse(localStorage.getItem('inProgressRecipes'))) {
+      localStorage.setItem('inProgressRecipes', JSON.stringify({
+        drinks: {},
+        meals: {},
+      }));
+    }
+    const saved = JSON.parse(localStorage.getItem('inProgressRecipes'));
+    const toMeals = {
+      drinks: { ...saved.drinks },
+      meals: { ...saved.meals, [idFood]: [...ingredientsValue, value] },
+    };
+    const toDrinks = {
+      drinks: { ...saved.drinks, [idFood]: [...ingredientsValue, value] },
+      meals: { ...saved.meals },
+    };
+    if (food === 'meals') {
+      localStorage.setItem('inProgressRecipes', JSON.stringify(toMeals));
+    } else {
+      localStorage.setItem('inProgressRecipes', JSON.stringify(toDrinks));
     }
   };
 
   const handleCheckbox = (target, ingredientId, ingredient) => {
-    const { checked, nextSibling } = target;
-    handleStorage(ingredientId, ingredient);
+    const { checked, nextSibling, value } = target;
+    addInProgressMeals(ingredientId, ingredient);
     if (checked) {
       nextSibling.style.textDecoration = 'line-through';
     } else {
       nextSibling.style.textDecoration = '';
     }
+    if (!ingredientsValue.includes(value)) {
+      setIngredientsValue((prevState) => [...prevState, value]);
+    } else {
+      ingredientsValue.splice(ingredientsValue.indexOf(value), 1);
+    }
     renderCheckboxFromStorage();
   };
 
   if (returnFetch.length > 0) {
-    console.log(storageReturn);
     const ingredientsMeasures = getIngredientsAndMeasures(returnFetch);
     return (
       <main>
@@ -151,42 +149,44 @@ export default function RecipeInProgress({ location: { pathname }, location }) {
             <h3 data-testid="recipe-category">{returnFetch[0].strAlcoholic}</h3>
           )}
           <section>
-            { ingredientsMeasures.map((ingredient, index) => (
-              <div key={ index }>
-                <label
-                  className="checkBoxContainer"
-                  data-testid={ `${index}-ingredient-step` }
-                  htmlFor={ index }
-                >
-                  <input
-                    value={ ingredient }
-                    type="checkbox"
-                    key={ `${ingredient}-${index}` }
-                    id={ index }
-                    defaultChecked={ storageReturn.includes(ingredient)
-                      || storageReturn === 0 }
-                    // checked={ storageReturn.includes(ingredient) }
-                    onChange={ ({ target }) => {
-                      handleCheckbox(
-                        target,
-                        returnFetch[0][`id${foodType}`],
-                        ingredient,
-                      );
-                      setCall(!call);
-                    } }
-                  />
-                  <p
-                    style={ {
-                      textDecoration: storageReturn.includes(ingredient)
-                        ? 'line-through'
-                        : '',
-                    } }
+            { ingredientsMeasures.map((ingredient, index) => {
+              const logic = ingredientsValue.some((i) => i === ingredient);
+              return (
+                <div key={ index }>
+                  <label
+                    className="checkBoxContainer"
+                    data-testid={ `${index}-ingredient-step` }
+                    htmlFor={ index }
                   >
-                    {ingredient}
-                  </p>
-                </label>
-              </div>
-            ))}
+                    <input
+                      value={ ingredient }
+                      type="checkbox"
+                      key={ `${ingredient}-${index}` }
+                      id={ index }
+                      // defaultChecked={ logic }
+                      checked={ logic }
+                      onChange={ ({ target }) => {
+                        handleCheckbox(
+                          target,
+                          returnFetch[0][`id${foodType}`],
+                          ingredient,
+                        );
+                        setCall(!call);
+                      } }
+                    />
+                    <p
+                      style={ {
+                        textDecoration: ingredientsValue.includes(ingredient)
+                          ? 'line-through'
+                          : '',
+                      } }
+                    >
+                      {ingredient}
+                    </p>
+                  </label>
+                </div>
+              );
+            })}
           </section>
           <p data-testid="instructions">{returnFetch[0].strInstructions}</p>
           {foodType === 'Meal' ? (
