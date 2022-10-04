@@ -78,7 +78,7 @@ hr {
 }
 
 .checkBoxContainer input {
+  accent-color: #d01919;
   margin-right: 5px;
   transform: translateY(-10px);
-  accent-color: #d01919;
 }
