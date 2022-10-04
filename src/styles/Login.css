@@ -4,6 +4,12 @@
   background-attachment: fixed;
   background-size: cover;
   align-items: flex-start;
+<<<<<<< HEAD
+=======
+  background-image: url('https://mfiles.alphacoders.com/968/968727.jpg');
+  background-position: 0 -150px;
+  background-size: 100%;
+>>>>>>> origin/main-group-30-new-dev
   display: flex;
   flex-direction: column;
   height: 100vh;

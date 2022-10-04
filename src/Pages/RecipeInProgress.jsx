@@ -1,32 +1,27 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
+import { Button, Card } from 'react-bootstrap';
 import { useHistory, useParams } from 'react-router-dom';
 import Favorite from '../Components/Favorite';
 import { fetchApiDrinks, fetchApiMeals } from '../Services/api';
-// import './style.css';
+import saveRecipesOnLocalStorage from '../Components/SaveDoneRecipes';
+import '../styles/RecipesDetails.css';
 
 export default function RecipeInProgress({ location: { pathname }, location }) {
   const { id } = useParams();
   const [returnFetch, setReturnFetch] = useState([]);
   // const [storageReturn, setStorageReturn] = useState([]);
-  const [bool, setBool] = useState(true);
+  // const [bool, setBool] = useState(true);
   const [call, setCall] = useState(false);
   const [ingredientsValue, setIngredientsValue] = useState([]);
-  // const [checkboxInput, setCheckedInput] = useState([]);
   const history = useHistory();
-
   const whatFood = (urlPath) => {
     if (urlPath.includes('meals')) {
       return 'Meal';
     }
     return 'Drink';
   };
-
-  const translate = {
-    Meal: 'meals',
-    Drink: 'drinks',
-  };
-
+  const translate = { Meal: 'meals', Drink: 'drinks' };
   const getIngredientsAndMeasures = (object) => {
     const entries = Object.entries(object[0]);
     const newArr = [];
@@ -60,27 +55,24 @@ export default function RecipeInProgress({ location: { pathname }, location }) {
     if (local) {
       const foodArray = local[translate[whatFood(pathname)]][id] || [];
       setIngredientsValue(foodArray);
-      // setStorageReturn(foodArray);
     }
   };
-
-  useEffect(() => {
-    const handleInputs = () => {
-      const local = JSON.parse(localStorage.getItem('inProgressRecipes'));
-      if (local) {
-        const localStorageIds = local[translate[whatFood(pathname)]][id];
-        const bools = [true];
-        if (localStorageIds && returnFetch.length > 0) {
-          const ingrediesntLength = getIngredientsAndMeasures(returnFetch).length;
-          bools.push(localStorageIds.length !== ingrediesntLength);
-        }
-        setBool(() => bools.every((falsy) => falsy));
-      }
-    };
-    handleInputs();
-    // renderCheckboxFromStorage();
-  }, [call, returnFetch]);
-
+  // useEffect(() => {
+  //   const handleInputs = () => {
+  //     const local = JSON.parse(localStorage.getItem('inProgressRecipes'));
+  //     if (local) {
+  //       const localStorageIds = local[translate[whatFood(pathname)]][id];
+  //       const bools = [true];
+  //       if (localStorageIds && returnFetch.length > 0) {
+  //         const ingrediesntLength = getIngredientsAndMeasures(returnFetch).length;
+  //         bools.push(localStorageIds.length !== ingrediesntLength);
+  //       }
+  //       setBool(() => bools.every((falsy) => falsy));
+  //     }
+  //   };
+  //   handleInputs();
+  //   // renderCheckboxFromStorage();
+  // }, [call, returnFetch]);
   useEffect(() => {
     callingFetch();
     renderCheckboxFromStorage();
@@ -131,65 +123,96 @@ export default function RecipeInProgress({ location: { pathname }, location }) {
   if (returnFetch.length > 0) {
     const ingredientsMeasures = getIngredientsAndMeasures(returnFetch);
     return (
-      <main>
-        <header>{foodType}</header>
-        <Favorite location={ location } returnFetch={ returnFetch } />
-        <section>
-          <h1 data-testid="recipe-title">{returnFetch[0][`str${foodType}`]}</h1>
-          <img
+      <main className="recipeDetailsContainer">
+        <Card style={ { border: 'none' } }>
+          <Card.Img
+            className="cardImage"
             src={ returnFetch[0][`str${foodType}Thumb`] }
             alt={ `${foodType}_img` }
             data-testid="recipe-photo"
-            width="300px"
-            height="300px"
           />
-          {foodType === 'Meal' ? (
-            <h3 data-testid="recipe-category">{returnFetch[0].strCategory}</h3>
-          ) : (
-            <h3 data-testid="recipe-category">{returnFetch[0].strAlcoholic}</h3>
-          )}
-          <section>
+          <Card.ImgOverlay className="overlay" style={ { padding: '0' } }>
+            <Card.Header
+              style={ { borderRadius: '0', color: '#f6f6f6', backgroundColor: '#161616',
+              } }
+              className="cardHeader"
+            >
+              {foodType === 'Meal' ? (
+                <Card.Text
+                  className="recipeCategory"
+                  data-testid="recipe-category"
+                >
+                  <h2>{returnFetch[0].strCategory}</h2>
+                </Card.Text>
+              ) : (
+                <Card.Text
+                  className="recipeCategory"
+                  data-testid="recipe-category"
+                >
+                  <h2>{returnFetch[0].strAlcoholic}</h2>
+                </Card.Text>
+              )}
+              <Favorite location={ location } returnFetch={ returnFetch } />
+            </Card.Header>
+            <Card.Title
+              data-testid="recipe-title"
+              className="cardTitle"
+              style={ { fontSize: '24px', fontWeight: '800', margin: 'auto' } }
+            >
+              <p>
+                {foodType === 'Meal'
+                  ? returnFetch[0].strMeal
+                  : returnFetch[0].strDrink}
+              </p>
+            </Card.Title>
+          </Card.ImgOverlay>
+        </Card>
+        <hr />
+        <section className="ingredientsContainer">
+          <ul>
             { ingredientsMeasures.map((ingredient, index) => {
               const logic = ingredientsValue.some((i) => i === ingredient);
               return (
-                <div key={ index }>
-                  <label
-                    className="checkBoxContainer"
-                    data-testid={ `${index}-ingredient-step` }
-                    htmlFor={ index }
+                <label
+                  key={ index }
+                  className="checkBoxContainer"
+                  data-testid={ `${index}-ingredient-step` }
+                  htmlFor={ index }
+                >
+                  <input
+                    value={ ingredient }
+                    type="checkbox"
+                    key={ `${ingredient}-${index}` }
+                    id={ index }
+                    checked={ logic }
+                    onChange={ ({ target }) => {
+                      handleCheckbox(
+                        target,
+                        returnFetch[0][`id${foodType}`],
+                        ingredient,
+                      );
+                      setCall(!call);
+                    } }
+                  />
+                  <p
+                    style={ {
+                      textDecoration: ingredientsValue.includes(ingredient)
+                        ? 'line-through'
+                        : '',
+                    } }
                   >
-                    <input
-                      value={ ingredient }
-                      type="checkbox"
-                      key={ `${ingredient}-${index}` }
-                      id={ index }
-                      // defaultChecked={ logic }
-                      checked={ logic }
-                      onChange={ ({ target }) => {
-                        handleCheckbox(
-                          target,
-                          returnFetch[0][`id${foodType}`],
-                          ingredient,
-                        );
-                        setCall(!call);
-                      } }
-                    />
-                    <p
-                      style={ {
-                        textDecoration: ingredientsValue.includes(ingredient)
-                          ? 'line-through'
-                          : '',
-                      } }
-                    >
-                      {ingredient}
-                    </p>
-                  </label>
-                </div>
+                    {ingredient}
+                  </p>
+                </label>
               );
             })}
-          </section>
-          <p data-testid="instructions">{returnFetch[0].strInstructions}</p>
-          {foodType === 'Meal' ? (
+          </ul>
+        </section>
+        <hr />
+        <article data-testid="instructions">{returnFetch[0].strInstructions}</article>
+        <hr />
+        {foodType === 'Meal' ? (
+          <div style={ { width: '100vw', overflowX: 'hidden', marginBottom: '40px' } }>
             <iframe
               title={ `${foodType}-Preparation` }
               width="420"
@@ -198,28 +221,30 @@ export default function RecipeInProgress({ location: { pathname }, location }) {
               data-testid="video"
               src={ returnFetch[0].strYoutube.replace('watch?v=', 'embed/') }
             />
-          ) : (
-            ''
-          )}
-        </section>
-        <section>
-          <button
-            type="button"
-            data-testid="finish-recipe-btn"
-            disabled={ bool }
-            onClick={ () => history.push('/done-recipes') }
-          >
-            FINISH RECIPE
-          </button>
-        </section>
+          </div>
+        ) : (
+          ''
+        )}
+        <Button
+          style={ { borderRadius: '0',
+            position: 'fixed',
+            bottom: '0',
+            width: '100%',
+            zIndex: '99' } }
+          variant="dark"
+          data-testid="finish-recipe-btn"
+          // disabled={ bool }
+          onClick={ () => {
+            saveRecipesOnLocalStorage(returnFetch, pathname);
+            history.push('/done-recipes');
+          } }
+        >
+          FINISH RECIPE
+        </Button>
       </main>
     );
   }
   return <div />;
 }
 
-RecipeInProgress.propTypes = {
-  location: PropTypes.shape({
-    pathname: PropTypes.string.isRequired,
-  }).isRequired,
-};
+RecipeInProgress.propTypes = { location: PropTypes.shape().isRequired };

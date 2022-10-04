@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useContext, useEffect, useState } from 'react';
 import { ButtonGroup, Container } from 'react-bootstrap';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { faUtensils } from '@fortawesome/free-solid-svg-icons';
 import {
   faGlassMartiniAlt,
@@ -45,17 +45,18 @@ export default function Header() {
   return (
     <Container className="headerStyles" style={ { padding: 0 } }>
       <div className="buttonsContainer">
-        <h4>
-          Recipes App
-          <FontAwesomeIcon
-            icon={ faPlateUtensils }
-            alt="searchBar"
-          />
-        </h4>
+        <Link to="/meals" style={ { textDecoration: 'none', color: '#f6f6f6' } }>
+          <h4>
+            Recipes App
+            <FontAwesomeIcon
+              icon={ faPlateUtensils }
+              alt="searchBar"
+            />
+          </h4>
+        </Link>
         <ButtonGroup>
           {verifyCondition() && (
             <button
-            // style={ { borderRadius: '0 0 0 10px' } }
               variant="danger"
               type="button"
               onClick={ () => setBoolHeader(!boolHeader) }
@@ -69,7 +70,6 @@ export default function Header() {
             </button>
           )}
           <button
-          // style={ { borderRadius: '0 0 10px' } }
             variant="danger"
             type="button"
             data-testid="profileBtn"

@@ -73,7 +73,11 @@ function Favorite({ location, returnFetch }) {
         onClick={ onClickShare }
         src={ shareIcon }
       >
-        <FontAwesomeIcon icon={ faShareAlt } alt="" />
+        <FontAwesomeIcon
+          style={ { color: copyLink ? '#d01919' : '#f6f6f6' } }
+          icon={ faShareAlt }
+          alt=""
+        />
       </button>
       <button
         type="button"
@@ -83,6 +87,7 @@ function Favorite({ location, returnFetch }) {
       >
         <FontAwesomeIcon
           icon={ markedFavorite ? faHeartCircleCheck : faHeart }
+          style={ { color: markedFavorite ? '#d01919' : '#f6f6f6' } }
           alt=""
         />
       </button>
