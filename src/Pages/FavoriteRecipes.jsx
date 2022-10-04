@@ -174,8 +174,9 @@ export default function FavoriteRecipes() {
             );
           })
         }
+
+        <div>{ copyLink && <p>Link copied!</p>}</div>
       </section>
-      <div>{ copyLink && <p>Link copied!</p>}</div>
     </div>
   );
 }

@@ -8,22 +8,15 @@ body {
 }
 
 .favorites-section {
-    /* display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100vw; */
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 10px;
-    background-color: #D01919;
+    background-color: #F6F6F6;
     padding: 10px;
     border-radius: 1%;
 }
 
 .card-section {
-    /* display: flex; */
-    /* flex-direction: row; */
-    /* padding: 50px */
     background-color: #F6F6F6;
     text-align: center;
     padding: 20px 0;
