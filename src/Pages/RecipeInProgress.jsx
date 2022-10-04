@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
 import Favorite from '../Components/Favorite';
 import { fetchApiDrinks, fetchApiMeals } from '../Services/api';
-// import './style.css';
+// import './style.css'
 
 export default function RecipeInProgress({ location: { pathname }, location }) {
   const { id } = useParams();
