@@ -165,7 +165,7 @@ export default function RecipeInProgress({ location: { pathname }, location }) {
               <p>
                 {foodType === 'Meal'
                   ? returnFetch[0].strMeal
-                  : returnFetch[0].strMeal}
+                  : returnFetch[0].strDrink}
               </p>
             </Card.Title>
           </Card.ImgOverlay>
@@ -229,7 +229,7 @@ export default function RecipeInProgress({ location: { pathname }, location }) {
           ''
         )}
         <Button
-          style={ { borderRadius: '0' } }
+          style={ { borderRadius: '0', position: 'fixed', bottom: '0', width: '100%' } }
           variant="dark"
           data-testid="finish-recipe-btn"
           disabled={ bool }

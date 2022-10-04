@@ -116,7 +116,7 @@ export default function RecipeDetails({ location: { pathname }, location }) {
               <p>
                 {foodType === 'Meal'
                   ? returnFetch[0].strMeal
-                  : returnFetch[0].strMeal}
+                  : returnFetch[0].strDrink}
               </p>
             </Card.Title>
           </Card.ImgOverlay>
