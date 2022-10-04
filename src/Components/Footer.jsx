@@ -1,9 +1,11 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import { faGlassMartiniAlt } from '@fortawesome/sharp-solid-svg-icons';
 import '../styles/Footer.css';
+import { faGlassMartiniAlt } from '@fortawesome/sharp-solid-svg-icons';
 import { faUtensils } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import drinkIcon from '../images/drinkIcon.svg';
+import mealIcon from '../images/mealIcon.svg';
 
 export default function Footer() {
   const history = useHistory();
@@ -22,6 +24,7 @@ export default function Footer() {
         type="button"
         data-testid="drinks-bottom-btn"
         onClick={ onClickDrinks }
+        src={ drinkIcon }
       >
         <FontAwesomeIcon icon={ faGlassMartiniAlt } />
       </button>
@@ -29,6 +32,7 @@ export default function Footer() {
         type="button"
         data-testid="meals-bottom-btn"
         onClick={ onClickMeals }
+        src={ mealIcon }
       >
         <FontAwesomeIcon icon={ faUtensils } />
       </button>

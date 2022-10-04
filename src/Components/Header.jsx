@@ -3,7 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import { ButtonGroup, Container } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { faUtensils } from '@fortawesome/free-solid-svg-icons';
-import { faGlassMartiniAlt, faPlateUtensils } from '@fortawesome/sharp-solid-svg-icons';
+import { faGlassMartiniAlt, faPlateUtensils, faUser } from '@fortawesome/sharp-solid-svg-icons';
 import { faSearch } from '@fortawesome/fontawesome-free-solid';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
@@ -56,11 +56,11 @@ export default function Header() {
               type="button"
               onClick={ () => setBoolHeader(!boolHeader) }
             >
-              <img
+              <FontAwesomeIcon
                 icon={ faSearch }
+                src={ searchIcon }
                 data-testid="search-top-btn"
                 alt="searchBar"
-                src={ searchIcon }
               />
             </button>
           )}
@@ -71,10 +71,11 @@ export default function Header() {
             data-testid="profileBtn"
             onClick={ () => history.push('/profile') }
           >
-            <img
-              data-testid="profile-top-btn"
-              alt="userPhoto"
+            <FontAwesomeIcon
               src={ profileIcon }
+              data-testid="profile-top-btn"
+              icon={ faUser }
+              alt="userPhoto"
             />
           </button>
         </ButtonGroup>

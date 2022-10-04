@@ -16,29 +16,31 @@ export default function Carousel({ carousel }) {
     getType();
   }, []);
   return (
-    <Swiper
-      style={ { marginBottom: '100px' } }
-      slidesPerView={ 2 }
-      spaceBetween={ 30 }
-      pagination={ { clickable: true } }
-      modules={ [Pagination] }
-      className="mySwiper"
-    >
-      {carousel.map((recipe, index) => (
-        <SwiperSlide key={ index }>
-          <p data-testid={ `${index}-recommendation-title` }>
-            {type === 'meals' ? recipe.strDrink : recipe.strMeal}
-          </p>
-          <img
-            src={ type === 'meals' ? recipe.strDrinkThumb : recipe.strMealThumb }
-            alt="food_img"
-            width="150px"
-            height="150px"
-            data-testid={ `${index}-recommendation-card` }
-          />
-        </SwiperSlide>
-      ))}
-    </Swiper>
+    <div style={ { width: '100vw', overflowX: 'hidden' } }>
+      <Swiper
+        style={ { marginBottom: '100px' } }
+        slidesPerView={ 2 }
+        spaceBetween={ 30 }
+        pagination={ { clickable: true } }
+        modules={ [Pagination] }
+        className="mySwiper"
+      >
+        {carousel.map((recipe, index) => (
+          <SwiperSlide key={ index }>
+            <p data-testid={ `${index}-recommendation-title` }>
+              {type === 'meals' ? recipe.strDrink : recipe.strMeal}
+            </p>
+            <img
+              src={ type === 'meals' ? recipe.strDrinkThumb : recipe.strMealThumb }
+              alt="food_img"
+              width="150px"
+              height="150px"
+              data-testid={ `${index}-recommendation-card` }
+            />
+          </SwiperSlide>
+        ))}
+      </Swiper>
+    </div>
   );
 }
 
