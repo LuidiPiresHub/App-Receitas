@@ -38,13 +38,22 @@ hr {
   color: #f6f6f6;
 }
 
+.cardHeader p {
+  font-size: small;
+}
+
 .recipeCategory {
+  align-items: baseline;
+  display: flex;
   margin-left: 4px;
-  transform: translateY(6px);
+  transform: translateY(10px);
 }
 
 .cardTitle {
+  align-items: center;
   color: #f6f6f6;
+  display: flex;
+  justify-content: center;
   text-shadow: 3px 3px 5px
     #16161673 , -1px -1px 5px
     #16161673 , 1px -1px 5px
@@ -52,8 +61,23 @@ hr {
     #16161673 , 1px 1px 5px
     #16161673;
   -webkit-text-stroke-color: #16161626;
+  width: 100vw;
 }
 
 .recipeDetailsContainer article {
   padding: 10px;
+}
+
+.ingredientsContainer {
+  transform: translateY(15px);
+}
+
+.checkBoxContainer {
+  align-items: center;
+  display: flex;
+}
+
+.checkBoxContainer input {
+  margin-right: 5px;
+  transform: translateY(-10px);
 }

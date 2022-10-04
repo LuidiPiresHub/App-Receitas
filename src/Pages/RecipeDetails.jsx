@@ -92,14 +92,14 @@ export default function RecipeDetails({ location: { pathname }, location }) {
                   className="recipeCategory"
                   data-testid="recipe-category"
                 >
-                  {returnFetch[0].strCategory}
+                  <h2>{returnFetch[0].strCategory}</h2>
                 </Card.Text>
               ) : (
                 <Card.Text
                   className="recipeCategory"
                   data-testid="recipe-category"
                 >
-                  {returnFetch[0].strAlcoholic}
+                  <h2>{returnFetch[0].strAlcoholic}</h2>
                 </Card.Text>
               )}
               <Favorite location={ location } returnFetch={ returnFetch } />
@@ -108,9 +108,9 @@ export default function RecipeDetails({ location: { pathname }, location }) {
               data-testid="recipe-title"
               className="cardTitle"
               style={ {
-                fontSize: '3rem',
+                fontSize: '24px',
                 fontWeight: '800',
-                margin: '18% auto',
+                margin: 'auto',
               } }
             >
               <p>
@@ -167,15 +167,7 @@ export default function RecipeDetails({ location: { pathname }, location }) {
     );
   }
   return (
-    <main>
-      <section>
-        <ProgressSection
-          type={ foodType === 'Meal' ? 'meals' : 'drinks' }
-          id={ id }
-        />
-        <Favorite location={ location } returnFetch={ returnFetch } id={ id } />
-      </section>
-    </main>
+    <div />
   );
 }
 
