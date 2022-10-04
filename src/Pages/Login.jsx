@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlateUtensils } from '@fortawesome/sharp-solid-svg-icons';
 import React, { useState } from 'react';
-import { Form, Button, Container } from 'react-bootstrap';
+import { Button, Container, Form } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import '../styles/Login.css';
 
