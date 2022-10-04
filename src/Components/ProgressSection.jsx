@@ -21,7 +21,6 @@ export default function ProgressSection({ /* recipeObj, */ type, id }) {
         }
       }
     };
-    console.log(type);
     handleType();
   }, [type]);
 
@@ -45,14 +44,20 @@ export default function ProgressSection({ /* recipeObj, */ type, id }) {
       {showBtn && (
         <Link
           to={
-            type === 'Meal'
+            type === 'meals'
               ? `/meals/${id}/in-progress`
               : `/drinks/${id}/in-progress`
           }
         >
           <Button
             data-testid="start-recipe-btn"
-            style={ { position: 'fixed', bottom: 0, width: '100%', borderRadius: 0 } }
+            style={ {
+              position: 'fixed',
+              bottom: 0,
+              width: '100%',
+              borderRadius: 0,
+              zIndex: 99,
+            } }
           >
             {BtnText}
           </Button>
