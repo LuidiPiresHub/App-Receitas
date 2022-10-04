@@ -38,6 +38,8 @@ const saveRecipesOnLocalStorage = (returnFetch, pathname) => {
         localStorage.setItem('doneRecipes', JSON.stringify([...local, newRecipe]));
       }
     });
+  } else {
+    localStorage.setItem('doneRecipes', JSON.stringify([...local, newRecipe]));
   }
 };
 
