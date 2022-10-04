@@ -69,8 +69,9 @@ function Favorite({ location, returnFetch, id }) {
         type="button"
         data-testid="share-btn"
         onClick={ onClickShare }
+        src={ shareIcon }
       >
-        <FontAwesomeIcon icon={ faShareAlt } src={ shareIcon } alt="" />
+        <FontAwesomeIcon icon={ faShareAlt } alt="" />
       </button>
       <button
         type="button"
@@ -80,7 +81,6 @@ function Favorite({ location, returnFetch, id }) {
       >
         <FontAwesomeIcon
           icon={ markedFavorite ? faHeartCircleCheck : faHeart }
-          src={ markedFavorite ? blackHeartIcon : whiteHeartIcon }
           alt=""
         />
       </button>

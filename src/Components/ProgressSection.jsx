@@ -44,16 +44,12 @@ export default function ProgressSection({ /* recipeObj, */ type, id }) {
     <div>
       {showBtn && (
         <Link
-          to={
-            type === 'Meal'
-              ? `/meals/${id}/in-progress`
-              : `/drinks/${id}/in-progress`
-          }
+          to={ `/${type}/${id}/in-progress` }
         >
           <Button
             variant="dark"
             data-testid="start-recipe-btn"
-            style={ { position: 'fixed', bottom: 0, width: '100%', borderRadius: 0 } }
+            style={ { position: 'fixed', bottom: 0, width: '100%', borderRadius: 0, zIndex: '99' } }
           >
             {BtnText}
           </Button>
