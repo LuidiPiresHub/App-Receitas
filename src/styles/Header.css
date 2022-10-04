@@ -77,3 +77,13 @@
   margin-top: 15px;
   width: 100%;
 }
+
+.radioContainer input {
+  background-color: #161616;
+}
+
+.radioContainer input:checked {
+  background-color: #161616;
+  border: none;
+  box-shadow: none;
+}
