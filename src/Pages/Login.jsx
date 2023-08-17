@@ -1,5 +1,5 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlateUtensils } from '@fortawesome/sharp-solid-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faPlateUtensils } from '@fortawesome/free-solid-svg-icons';
 import React, { useState } from 'react';
 import { Button, Container, Form } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
@@ -44,7 +44,7 @@ export default function Login() {
 
   return (
     <div className="bgStyles">
-      <FontAwesomeIcon icon={ faPlateUtensils } />
+      {/* <FontAwesomeIcon icon={ faPlateUtensils } /> */}
       <h1>Login to continue:</h1>
       <Container className="containerStyles">
         <Form className="formStyles">

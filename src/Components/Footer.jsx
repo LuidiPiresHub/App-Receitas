@@ -1,7 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import '../styles/Footer.css';
-import { faGlassMartiniAlt } from '@fortawesome/sharp-solid-svg-icons';
+import { faGlassMartiniAlt } from '@fortawesome/free-solid-svg-icons';
 import { faUtensils } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import drinkIcon from '../images/drinkIcon.svg';
