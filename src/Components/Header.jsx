@@ -2,12 +2,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useContext, useEffect, useState } from 'react';
 import { ButtonGroup, Container } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
-import { faUtensils } from '@fortawesome/free-solid-svg-icons';
 import {
   faGlassMartiniAlt,
-  faPlateUtensils,
+  // faPlateUtensils,
   faUser,
-} from '@fortawesome/sharp-solid-svg-icons';
+  faUtensils,
+} from '@fortawesome/free-solid-svg-icons';
 import { faSearch } from '@fortawesome/fontawesome-free-solid';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
@@ -49,7 +49,7 @@ export default function Header() {
           <h4>
             Recipes App
             <FontAwesomeIcon
-              icon={ faPlateUtensils }
+              // icon={ faPlateUtensils }
               alt="searchBar"
             />
           </h4>
